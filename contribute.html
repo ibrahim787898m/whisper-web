@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Contribute to Whisper - Help build the future of conversational programming"
+    />
+    <meta
+      name="keywords"
+      content="whisper, contribute, open source, programming language, github"
+    />
+    <meta name="author" content="Ibrahim Mustafa Opu" />
+
+    <meta property="og:title" content="Contribute to Whisper" />
+    <meta
+      property="og:description"
+      content="Join the Whisper community and help make programming more natural"
+    />
+    <meta property="og:type" content="website" />
+
+    <title>Contribute - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .hero {
+        text-align: center;
+        padding: 6rem 3% 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #8ab4f8 0%, #c58af9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero .tagline {
+        font-size: 1.3rem;
+        color: #b8c5d6;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .content-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 3%;
+      }
+
+      .contribution-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .contribution-card {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s;
+      }
+
+      .contribution-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(138, 180, 248, 0.5);
+        box-shadow: 0 8px 24px rgba(138, 180, 248, 0.2);
+      }
+
+      .contribution-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .contribution-card h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+
+      .contribution-card p {
+        color: #b8c5d6;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .contribution-card ul {
+        list-style: none;
+        color: #b8c5d6;
+      }
+
+      .contribution-card ul li {
+        padding-left: 1.5rem;
+        position: relative;
+        margin-bottom: 0.5rem;
+      }
+
+      .contribution-card ul li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #8ab4f8;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: #b8c5d6;
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+      }
+
+      .getting-started {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 3rem;
+        margin-bottom: 4rem;
+      }
+
+      .getting-started h2 {
+        color: #8ab4f8;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .step {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+
+      .step-number {
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+        font-weight: bold;
+        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .step-content h3 {
+        color: #8ab4f8;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .step-content p {
+        color: #b8c5d6;
+        line-height: 1.8;
+      }
+
+      .code-block {
+        background: rgba(10, 14, 39, 0.8);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        overflow-x: auto;
+      }
+
+      .code-block code {
+        font-family: "Consolas", "Monaco", monospace;
+        color: #7dd3fc;
+        font-size: 0.95rem;
+      }
+
+      .guidelines {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 3rem;
+        margin-bottom: 4rem;
+      }
+
+      .guidelines h2 {
+        color: #8ab4f8;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+      }
+
+      .guidelines ul {
+        list-style: none;
+        color: #b8c5d6;
+      }
+
+      .guidelines ul li {
+        padding-left: 2rem;
+        position: relative;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+
+      .guidelines ul li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #8ab4f8;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .cta-section {
+        text-align: center;
+        padding: 4rem 3%;
+        background: rgba(138, 180, 248, 0.03);
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .cta-section h2 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+      }
+
+      .cta-section p {
+        color: #b8c5d6;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+      }
+
+      .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(138, 180, 248, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #8ab4f8;
+        border: 2px solid #8ab4f8;
+        margin-left: 1rem;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(138, 180, 248, 0.1);
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1rem;
+        }
+
+        .hero {
+          padding: 3rem 3% 2rem;
+        }
+
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .getting-started,
+        .guidelines {
+          padding: 1.5rem;
+        }
+
+        .step {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .btn {
+          width: 100%;
+          margin: 0.5rem 0;
+        }
+
+        .btn-secondary {
+          margin-left: 0;
+        }
+      }
+
+      @media (min-width: 481px) and (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .contribution-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .hero h1 {
+          font-size: 3.2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.3rem;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Desktops (1025px - 1440px) */
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .hero h1 {
+          font-size: 4.5rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.7rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .features {
+          max-width: 1600px;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>🤝 Contribute to Whisper</h1>
+      <p class="tagline">
+        Join our community and help make programming more natural and accessible
+        for everyone!
+      </p>
+    </section>
+
+    <div class="content-section">
+      <h2 class="section-title">Ways to Contribute</h2>
+      <p class="section-subtitle">
+        Every contribution, big or small, makes a difference
+      </p>
+
+      <div class="contribution-grid">
+        <div class="contribution-card">
+          <div class="contribution-icon">💻</div>
+          <h3>Code Contributions</h3>
+          <p>Help improve Whisper by contributing code:</p>
+          <ul>
+            <li>Fix bugs and issues</li>
+            <li>Add new features</li>
+            <li>Improve performance</li>
+            <li>Enhance error messages</li>
+            <li>Write unit tests</li>
+          </ul>
+        </div>
+
+        <div class="contribution-card">
+          <div class="contribution-icon">📚</div>
+          <h3>Documentation</h3>
+          <p>Make Whisper easier to learn:</p>
+          <ul>
+            <li>Improve existing docs</li>
+            <li>Write tutorials</li>
+            <li>Create video guides</li>
+            <li>Translate documentation</li>
+            <li>Fix typos and errors</li>
+          </ul>
+        </div>
+
+        <div class="contribution-card">
+          <div class="contribution-icon">🎨</div>
+          <h3>Examples & Projects</h3>
+          <p>Inspire others with your creativity:</p>
+          <ul>
+            <li>Create example programs</li>
+            <li>Build sample projects</li>
+            <li>Share use cases</li>
+            <li>Write blog posts</li>
+            <li>Create templates</li>
+          </ul>
+        </div>
+
+        <div class="contribution-card">
+          <div class="contribution-icon">🐛</div>
+          <h3>Bug Reports</h3>
+          <p>Help us squash bugs:</p>
+          <ul>
+            <li>Report issues on GitHub</li>
+            <li>Provide reproduction steps</li>
+            <li>Test bug fixes</li>
+            <li>Suggest improvements</li>
+            <li>Verify resolved issues</li>
+          </ul>
+        </div>
+
+        <div class="contribution-card">
+          <div class="contribution-icon">💡</div>
+          <h3>Ideas & Feedback</h3>
+          <p>Share your thoughts:</p>
+          <ul>
+            <li>Suggest new features</li>
+            <li>Provide user feedback</li>
+            <li>Share use cases</li>
+            <li>Discuss improvements</li>
+            <li>Vote on proposals</li>
+          </ul>
+        </div>
+
+        <div class="contribution-card">
+          <div class="contribution-icon">🌍</div>
+          <h3>Community Support</h3>
+          <p>Help grow the community:</p>
+          <ul>
+            <li>Answer questions</li>
+            <li>Help other users</li>
+            <li>Share on social media</li>
+            <li>Write reviews</li>
+            <li>Star the repo ⭐</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="getting-started">
+        <h2>🚀 Getting Started</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Fork the Repository</h3>
+              <p>Create your own copy of the Whisper repository on GitHub.</p>
+              <div class="code-block">
+                <code>https://github.com/ibrahim787898m/whisper-lang</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Clone Your Fork</h3>
+              <p>Download your forked repository to your local machine.</p>
+              <div class="code-block">
+                <code
+                  >git clone
+                  https://github.com/YOUR-USERNAME/whisper-lang.git<br />cd
+                  whisper-lang</code
+                >
+              </div>
+              <p style="color: #fbbf24; font-size: 0.9rem; margin-top: 0.5rem">
+                ⚠️ Replace <code>YOUR-USERNAME</code> with your GitHub username
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Create a Branch</h3>
+              <p>Create a new branch for your feature or fix.</p>
+              <div class="code-block">
+                <code>git checkout -b feature/your-feature-name</code>
+              </div>
+              <p style="color: #fbbf24; font-size: 0.9rem; margin-top: 0.5rem">
+                💡 Replace
+                <code
+                  style="
+                    background: rgba(251, 191, 36, 0.1);
+                    padding: 0.2rem 0.4rem;
+                    border-radius: 4px;
+                  "
+                  >your-feature-name</code
+                >
+                with a descriptive name like
+                <code
+                  style="
+                    background: rgba(251, 191, 36, 0.1);
+                    padding: 0.2rem 0.4rem;
+                    border-radius: 4px;
+                  "
+                  >add-loop-feature</code
+                >
+                or
+                <code
+                  style="
+                    background: rgba(251, 191, 36, 0.1);
+                    padding: 0.2rem 0.4rem;
+                    border-radius: 4px;
+                  "
+                  >fix-input-bug</code
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h3>Make Your Changes</h3>
+              <p>
+                Write your code, fix bugs, or improve documentation. Test your
+                changes thoroughly.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h3>Commit Your Changes</h3>
+              <p>Commit your changes with a clear and descriptive message.</p>
+              <div class="code-block">
+                <code
+                  >git add .<br />git commit -m "Add: Brief description of your
+                  changes"</code
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <h3>Push and Create PR</h3>
+              <p>Push your changes to GitHub and create a Pull Request.</p>
+              <div class="code-block">
+                <code>git push origin feature/your-feature-name</code>
+              </div>
+              <p style="color: #fbbf24; font-size: 0.9rem; margin-top: 0.5rem">
+                💡 Use the same branch name from Step 3
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guidelines">
+        <h2>📋 Contribution Guidelines</h2>
+        <ul>
+          <li>Write clear, descriptive commit messages</li>
+          <li>Follow the existing code style and conventions</li>
+          <li>Add comments to explain complex logic</li>
+          <li>Test your changes before submitting</li>
+          <li>Update documentation if you change functionality</li>
+          <li>Keep pull requests focused on a single feature/fix</li>
+          <li>Be respectful and constructive in discussions</li>
+          <li>Reference related issues in your PR description</li>
+          <li>
+            Be patient - maintainers will review your PR as soon as possible
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="cta-section">
+      <h2>Ready to Contribute?</h2>
+      <p>Join us in making programming more natural and accessible!</p>
+      <div>
+        <a
+          href="https://github.com/ibrahim787898m/whisper-lang"
+          target="_blank"
+          class="btn btn-primary"
+          >View on GitHub</a
+        >
+        <a
+          href="https://github.com/ibrahim787898m/whisper-lang/issues"
+          target="_blank"
+          class="btn btn-secondary"
+          >Browse Issues</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

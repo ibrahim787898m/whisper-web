@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Existing meta tags -->
+    <meta
+      name="description"
+      content="Whisper - A conversational programming language with natural English syntax. Perfect for beginners, educators, and creative coders."
+    />
+    <meta
+      name="keywords"
+      content="whisper, programming language, natural language, conversational coding, beginner-friendly"
+    />
+    <meta name="author" content="Ibrahim Mustafa Opu" />
+
+    <!-- Open Graph for social media -->
+    <meta
+      property="og:title"
+      content="Whisper - Conversational Programming Language"
+    />
+    <meta
+      property="og:description"
+      content="Write code that reads like English. Natural syntax, powerful features."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourwebsite.com" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Whisper Programming Language" />
+    <meta
+      name="twitter:description"
+      content="A truly unique programming language with conversational syntax"
+    />
+
+    <title>Whisper - A Conversational Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .hero {
+        text-align: center;
+        padding: 8rem 3% 6rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #8ab4f8 0%, #c58af9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero .tagline {
+        font-size: 1.5rem;
+        color: #b8c5d6;
+        margin-bottom: 3rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(138, 180, 248, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #8ab4f8;
+        border: 2px solid #8ab4f8;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(138, 180, 248, 0.1);
+      }
+
+      .code-example {
+        background: rgba(26, 31, 58, 0.8);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 4rem auto;
+        max-width: 700px;
+        text-align: left;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .code-example h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .code-example pre {
+        background: #0a0e27;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+
+      .code-example code {
+        color: #e0e6ed;
+      }
+
+      .keyword {
+        color: #c58af9;
+        font-weight: 600;
+      }
+      .string {
+        color: #7dd3fc;
+      }
+      .number {
+        color: #fbbf24;
+      }
+      .comment {
+        color: #6b7280;
+        font-style: italic;
+      }
+
+      .features {
+        padding: 6rem 3%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .features h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #8ab4f8;
+      }
+
+      .features-subtitle {
+        text-align: center;
+        color: #b8c5d6;
+        margin-bottom: 4rem;
+        font-size: 1.2rem;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(138, 180, 248, 0.5);
+        box-shadow: 0 8px 24px rgba(138, 180, 248, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card h3 {
+        color: #8ab4f8;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+      }
+
+      .feature-card p {
+        color: #b8c5d6;
+        line-height: 1.8;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Universal Code Block Styling with Copy Button */
+      .code-block {
+        position: relative;
+        margin: 2rem 0;
+      }
+
+      .code-block pre {
+        position: relative;
+        /* padding-top: 2rem !important; */
+        /* padding-bottom: 2rem !important; */
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 1.75rem;
+        right: 0.75rem;
+        background: rgba(138, 180, 248, 0.2);
+        border: 1px solid rgba(138, 180, 248, 0.3);
+        color: #8ab4f8;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .copy-btn:hover {
+        background: rgba(138, 180, 248, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+      }
+
+      /* Mobile devices (320px - 480px) */
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1rem;
+          padding: 0 1rem;
+        }
+
+        .hero {
+          padding: 3rem 3% 2rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        /* .btn {
+          width: 100%;
+          text-align: center;
+        } */
+
+        .code-example {
+          padding: 1rem;
+        }
+
+        .code-example pre {
+          font-size: 0.85rem;
+          padding: 1rem;
+        }
+
+        .features {
+          padding: 3rem 3%;
+        }
+
+        .features h2 {
+          font-size: 1.8rem;
+        }
+
+        .features-subtitle {
+          font-size: 1rem;
+        }
+
+        .feature-card {
+          padding: 1.5rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        /* section h2 {
+          font-size: 1.8rem !important;
+        }
+
+        section pre {
+          font-size: 1rem !important;
+          padding: 1.5rem 1rem !important;
+        } */
+
+        /* section button {
+          position: static !important;
+          margin-top: 1rem;
+          width: 100%;
+        } */
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 0rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .code-example pre {
+          padding-top: 1rem !important;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Tablets (481px - 768px) */
+      @media (min-width: 481px) and (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.2rem;
+        }
+
+        .hero {
+          padding: 7rem 3% 8rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .code-example {
+          padding: 1.5rem;
+        }
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 0rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .code-example pre {
+          padding-top: 1rem !important;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .hero h1 {
+          font-size: 3.2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.3rem;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 0rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .code-example pre {
+          padding-top: 1rem !important;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Desktops (1025px - 1440px) */
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .hero h1 {
+          font-size: 4.5rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.7rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .features {
+          max-width: 1600px;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.5rem;
+        }
+      }
+
+      /* Hamburger menu for tablets and mobile */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>🌙 Whisper</h1>
+      <p class="tagline">
+        A truly unique programming language with conversational, natural English
+        syntax that makes coding feel like storytelling.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="installation.html" class="btn btn-primary">Get Started</a>
+        <a href="documentation.html" class="btn btn-secondary">Read Docs</a>
+        <a
+          href="https://github.com/ibrahim787898m/whisper-lang"
+          class="btn btn-secondary"
+          target="_blank"
+          >GitHub</a
+        >
+      </div>
+    </section>
+
+    <div class="code-example">
+      <h3>✨ Write Code That Reads Like English</h3>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">
+          <span>📋</span>
+          <span class="btn-text">Copy</span>
+        </button>
+
+        <pre><code><span class="comment"># A simple greeting program</span>
+<span class="keyword">ask</span> <span class="string">"What is your name?"</span> <span class="keyword">into</span> name
+
+<span class="keyword">whisper</span> <span class="string">"Hello, "</span> + name + <span class="string">"!"</span>
+<span class="keyword">whisper</span> <span class="string">"Welcome to Whisper programming!"</span>
+
+<span class="keyword">let</span> age <span class="keyword">be</span> <span class="number">25</span>
+<span class="keyword">when</span> age <span class="keyword">greater than</span> <span class="number">18</span>:
+    <span class="keyword">whisper</span> <span class="string">"You are an adult!"</span></code></pre>
+      </div>
+    </div>
+
+    <section
+      style="
+        text-align: center;
+        padding: 5rem 3%;
+        background: rgba(138, 180, 248, 0.03);
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+      "
+    >
+      <h2 style="color: #8ab4f8; margin-bottom: 2rem; font-size: 2.5rem">
+        Quick Install
+      </h2>
+
+      <div style="max-width: 700px; margin: 0 auto">
+        <div
+          class="code-block"
+          style="
+            position: relative;
+            background: rgba(10, 14, 39, 0.8);
+            padding: 2rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(138, 180, 248, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          "
+        >
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre
+            style="
+              margin: 0;
+              font-family: 'Consolas', 'Monaco', monospace;
+              font-size: 1.3rem;
+              text-align: left;
+            "
+          ><code style="color: #7dd3fc; font-weight: 600;">pip install whisper-lang</code></pre>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+          "
+        >
+          <div style="text-align: center">
+            <div
+              style="color: #8ab4f8; font-size: 1.5rem; margin-bottom: 0.5rem"
+            >
+              ✓
+            </div>
+            <div style="color: #b8c5d6; font-size: 0.95rem">Python 3.7+</div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="color: #8ab4f8; font-size: 1.5rem; margin-bottom: 0.5rem"
+            >
+              ✓
+            </div>
+            <div style="color: #b8c5d6; font-size: 0.95rem">
+              No Dependencies
+            </div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="color: #8ab4f8; font-size: 1.5rem; margin-bottom: 0.5rem"
+            >
+              ✓
+            </div>
+            <div style="color: #b8c5d6; font-size: 0.95rem">Cross-Platform</div>
+          </div>
+        </div>
+      </div>
+
+      <a
+        href="installation.html"
+        style="
+          display: inline-block;
+          margin-top: 2rem;
+          color: #8ab4f8;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1.1rem;
+          transition: color 0.3s;
+        "
+      >
+        View detailed installation guide →
+      </a>
+    </section>
+
+    <section class="features">
+      <h2>Why Choose Whisper?</h2>
+      <p class="features-subtitle">
+        Natural syntax, powerful features, endless possibilities
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Conversational Syntax</h3>
+          <p>
+            Write code that reads like plain English. Use natural phrases like
+            "ask", "whisper", "remember that", and "when" to create intuitive
+            programs.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3>Storytelling Mode</h3>
+          <p>
+            Create interactive stories and games with built-in story objects.
+            Make characters, items, and worlds come alive with natural language.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Easy to Learn</h3>
+          <p>
+            Perfect for beginners and students. No complex syntax or cryptic
+            symbols. If you can write a sentence, you can write Whisper code.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Powerful Features</h3>
+          <p>
+            Functions, loops, conditionals, file handling, error handling, and
+            more. All with natural, readable syntax that makes sense.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔧</div>
+          <h3>Python-Powered</h3>
+          <p>
+            Built on Python 3.7+, Whisper gives you the power of Python with the
+            simplicity of natural language. No dependencies required.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>VS Code Support</h3>
+          <p>
+            Full syntax highlighting and language support for Visual Studio
+            Code. Write Whisper code with beautiful colors and auto-completion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      // Close menu when clicking on a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+
+      function copyCode(button) {
+        // Find the code element in the same container
+        const container = button.parentElement;
+        const codeElement = container.querySelector("code");
+        const code = codeElement.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            const btnText = button.querySelector(".btn-text");
+            const originalText = btnText.textContent;
+
+            // Change button appearance
+            btnText.textContent = "Copied!";
+            button.classList.add("copied");
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+              btnText.textContent = originalText;
+              button.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            alert("Failed to copy code");
+          });
+      }
+    </script>
+  </body>
+</html>

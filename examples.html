@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Examples - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 3%;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: #b8c5d6;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .example-card {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .example-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(138, 180, 248, 0.5);
+        box-shadow: 0 8px 24px rgba(138, 180, 248, 0.2);
+      }
+
+      .example-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .example-card h3 {
+        color: #8ab4f8;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .example-card p {
+        color: #b8c5d6;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .example-tag {
+        display: inline-block;
+        background: rgba(138, 180, 248, 0.2);
+        color: #8ab4f8;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .view-code-btn {
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .view-code-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(138, 180, 248, 0.3);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 2000;
+        overflow-y: auto;
+        padding: 2rem;
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: rgba(26, 31, 58, 0.95);
+        border: 1px solid rgba(138, 180, 248, 0.3);
+        border-radius: 12px;
+        padding: 2.5rem;
+        max-width: 900px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .modal-header h2 {
+        color: #8ab4f8;
+        font-size: 2rem;
+      }
+
+      .close-btn {
+        background: transparent;
+        border: none;
+        color: #8ab4f8;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .close-btn:hover {
+        color: #c58af9;
+      }
+
+      .modal-description {
+        color: #b8c5d6;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+      }
+
+      .code-block {
+        background: #0a0e27;
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        margin: 0;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+
+      .keyword {
+        color: #c58af9;
+        font-weight: 600;
+      }
+      .string {
+        color: #7dd3fc;
+      }
+      .number {
+        color: #fbbf24;
+      }
+      .comment {
+        color: #6b7280;
+        font-style: italic;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      @media (max-width: 480px) {
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .page-header p {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 2rem 3%;
+        }
+
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .example-card {
+          padding: 1.5rem;
+        }
+
+        .modal {
+          padding: 1rem;
+        }
+
+        .modal-content {
+          padding: 1.5rem;
+        }
+
+        .modal-header h2 {
+          font-size: 1.5rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .code-block {
+          padding: 1rem;
+        }
+
+        .code-block pre {
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (min-width: 481px) and (max-width: 768px) {
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .container {
+          padding: 3rem 3%;
+        }
+
+        .examples-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .container {
+          max-width: 1000px;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1441px) {
+        .container {
+          max-width: 1400px;
+        }
+
+        .page-header h1 {
+          font-size: 3.5rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .footer-content {
+          max-width: 1600px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>💡 Example Programs</h1>
+        <p>Learn by exploring real Whisper programs</p>
+      </div>
+
+      <div class="examples-grid">
+        <div class="example-card" onclick="showExample('hello')">
+          <div class="example-icon">👋</div>
+          <h3>Hello World</h3>
+          <p>
+            Your first Whisper program. A simple introduction to basic output
+            commands.
+          </p>
+          <div>
+            <span class="example-tag">Beginner</span>
+            <span class="example-tag">Output</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+
+        <div class="example-card" onclick="showExample('calculator')">
+          <div class="example-icon">🔢</div>
+          <h3>Simple Calculator</h3>
+          <p>
+            A calculator that takes two numbers and performs basic arithmetic
+            operations.
+          </p>
+          <div>
+            <span class="example-tag">Beginner</span>
+            <span class="example-tag">Math</span>
+            <span class="example-tag">Input</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+
+        <div class="example-card" onclick="showExample('guessing')">
+          <div class="example-icon">🎲</div>
+          <h3>Number Guessing Game</h3>
+          <p>
+            Guess a number between 1-100 within 10 attempts. Features loops and
+            conditionals.
+          </p>
+          <div>
+            <span class="example-tag">Intermediate</span>
+            <span class="example-tag">Game</span>
+            <span class="example-tag">Loops</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+
+        <div class="example-card" onclick="showExample('todo')">
+          <div class="example-icon">✅</div>
+          <h3>Todo List Manager</h3>
+          <p>
+            Add, display, and delete tasks from a to-do list. Learn about lists
+            and user interaction.
+          </p>
+          <div>
+            <span class="example-tag">Intermediate</span>
+            <span class="example-tag">Lists</span>
+            <span class="example-tag">CRUD</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+
+        <div class="example-card" onclick="showExample('adventure')">
+          <div class="example-icon">🗺️</div>
+          <h3>Interactive Story Adventure</h3>
+          <p>
+            An interactive narrative with choices and consequences. Perfect for
+            storytelling.
+          </p>
+          <div>
+            <span class="example-tag">Advanced</span>
+            <span class="example-tag">Story</span>
+            <span class="example-tag">Interactive</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+
+        <div class="example-card" onclick="showExample('rpg')">
+          <div class="example-icon">🐉</div>
+          <h3>RPG Dragon Battle</h3>
+          <p>
+            Fight a dragon in this complete RPG battle system with health,
+            attacks, and treasure.
+          </p>
+          <div>
+            <span class="example-tag">Advanced</span>
+            <span class="example-tag">Game</span>
+            <span class="example-tag">Complete</span>
+          </div>
+          <button class="view-code-btn">View Code</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title"></h2>
+          <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <p id="modal-description" class="modal-description"></p>
+        <div class="code-block">
+          <pre id="modal-code"></pre>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const examples = {
+        hello: {
+          title: "👋 Hello World",
+          description:
+            "Your first Whisper program demonstrating basic output commands.",
+          code: `<span class="comment"># Hello World - Your First Whisper Program</span>
+
+<span class="keyword">whisper</span> <span class="string">"Hello, World!"</span>
+<span class="keyword">whisper</span> <span class="string">"Welcome to Whisper programming!"</span>
+
+<span class="keyword">show</span> <span class="string">"This language is conversational and fun!"</span>
+<span class="keyword">tell me</span> <span class="string">"You're going to love it!"</span>`,
+        },
+        calculator: {
+          title: "🔢 Simple Calculator",
+          description:
+            "A calculator that performs basic arithmetic operations on two numbers.",
+          code: `<span class="comment"># Simple Calculator</span>
+
+<span class="keyword">whisper</span> <span class="string">"=== Calculator ==="</span>
+
+<span class="keyword">ask</span> <span class="string">"Enter first number:"</span> <span class="keyword">into</span> a
+<span class="keyword">ask</span> <span class="string">"Enter second number:"</span> <span class="keyword">into</span> b
+
+<span class="keyword">let</span> sum <span class="keyword">be</span> a + b
+<span class="keyword">let</span> diff <span class="keyword">be</span> a - b
+<span class="keyword">let</span> prod <span class="keyword">be</span> a * b
+<span class="keyword">let</span> quot <span class="keyword">be</span> a / b
+
+<span class="keyword">show</span> <span class="string">"Sum: "</span> + sum
+<span class="keyword">show</span> <span class="string">"Difference: "</span> + diff
+<span class="keyword">show</span> <span class="string">"Product: "</span> + prod
+<span class="keyword">show</span> <span class="string">"Quotient: "</span> + quot`,
+        },
+        guessing: {
+          title: "🎲 Number Guessing Game",
+          description:
+            "Guess a random number between 1 and 100 within 10 attempts.",
+          code: `<span class="comment"># Number Guessing Game</span>
+
+<span class="keyword">let</span> secret <span class="keyword">be</span> randint(<span class="number">1</span>, <span class="number">100</span>)
+<span class="keyword">let</span> attempts <span class="keyword">be</span> <span class="number">0</span>
+<span class="keyword">let</span> max_attempts <span class="keyword">be</span> <span class="number">10</span>
+
+<span class="keyword">whisper</span> <span class="string">"=== Guess the Number ==="</span>
+<span class="keyword">whisper</span> <span class="string">"I'm thinking of a number between 1 and 100"</span>
+
+<span class="keyword">while</span> attempts <span class="keyword">less than</span> max_attempts:
+    <span class="keyword">ask</span> <span class="string">"Your guess:"</span> <span class="keyword">into</span> guess
+    <span class="keyword">increase</span> attempts <span class="keyword">by</span> <span class="number">1</span>
+    
+    <span class="keyword">when</span> guess <span class="keyword">is</span> secret:
+        <span class="keyword">whisper</span> <span class="string">"Attempts taken: "</span> + attempts
+        <span class="keyword">stop</span>
+    <span class="keyword">or when</span> guess <span class="keyword">less than</span> secret:
+        <span class="keyword">whisper</span> <span class="string">"Too low! Try again."</span>
+    <span class="keyword">otherwise</span>:
+        <span class="keyword">whisper</span> <span class="string">"Too high! Try again."</span>
+
+<span class="keyword">whisper</span> <span class="string">"Thanks for playing!"`,
+        },
+        todo: {
+          title: "✅ Todo List Manager",
+          description:
+            "Manage your tasks with add, display, and delete operations.",
+          code: `<span class="comment"># Todo List Manager</span>
+
+<span class="keyword">make</span> tasks <span class="keyword">with</span> []
+<span class="keyword">let</span> running <span class="keyword">be</span> <span class="number">1</span>
+
+<span class="keyword">while</span> running <span class="keyword">is</span> <span class="number">1</span>:
+    <span class="keyword">whisper</span> <span class="string">"\\n=== Todo List ==="</span>
+    <span class="keyword">whisper</span> <span class="string">"1. Add task"</span>
+    <span class="keyword">whisper</span> <span class="string">"2. Show tasks"</span>
+    <span class="keyword">whisper</span> <span class="string">"3. Delete task"</span>
+    <span class="keyword">whisper</span> <span class="string">"4. Exit"</span>
+    
+    <span class="keyword">ask</span> <span class="string">"Choose option:"</span> <span class="keyword">into</span> choice
+    
+    <span class="keyword">when</span> choice <span class="keyword">is</span> <span class="number">1</span>:
+        <span class="keyword">ask</span> <span class="string">"Enter task:"</span> <span class="keyword">into</span> task
+        <span class="keyword">add</span> task <span class="keyword">to</span> tasks
+        <span class="keyword">whisper</span> <span class="string">"Task added!"</span>
+    
+    <span class="keyword">or when</span> choice <span class="keyword">is</span> <span class="number">2</span>:
+        <span class="keyword">whisper</span> <span class="string">"\\nYour tasks:"</span>
+        <span class="keyword">let</span> count <span class="keyword">be</span> <span class="number">1</span>
+        <span class="keyword">for each</span> task <span class="keyword">in</span> tasks:
+            <span class="keyword">show</span> count + <span class="string">". "</span> + task
+            <span class="keyword">increase</span> count <span class="keyword">by</span> <span class="number">1</span>
+    
+    <span class="keyword">or when</span> choice <span class="keyword">is</span> <span class="number">3</span>:
+        <span class="keyword">ask</span> <span class="string">"Enter task to delete:"</span> <span class="keyword">into</span> del_task
+        <span class="keyword">remove</span> del_task <span class="keyword">from</span> tasks
+        <span class="keyword">whisper</span> <span class="string">"Task deleted!"</span>
+    
+    <span class="keyword">or when</span> choice <span class="keyword">is</span> <span class="number">4</span>:
+        <span class="keyword">set</span> running <span class="keyword">to</span> <span class="number">0</span>
+        <span class="keyword">whisper</span> <span class="string">"Goodbye!"</span>`,
+        },
+        adventure: {
+          title: "🗺️ Interactive Story Adventure",
+          description:
+            "An interactive narrative where your choices shape the story.",
+          code: `<span class="comment"># Interactive Story Adventure</span>
+
+<span class="keyword">whisper</span> <span class="string">"=== The Enchanted Forest ==="</span>
+<span class="keyword">whisper</span> <span class="string">"You stand at the entrance of a mysterious forest."</span>
+<span class="keyword">whisper</span> <span class="string">"Two paths lie before you..."</span>
+
+<span class="keyword">ask</span> <span class="string">"Take the LEFT path or RIGHT path?"</span> <span class="keyword">into</span> choice
+
+<span class="keyword">when</span> choice <span class="keyword">is</span> <span class="string">"LEFT"</span>:
+    <span class="keyword">whisper</span> <span class="string">"\\nYou walk down the shadowy left path."</span>
+    <span class="keyword">whisper</span> <span class="string">"You encounter a wise old wizard!"</span>
+    
+    <span class="keyword">ask</span> <span class="string">"Do you TALK to him or IGNORE him?"</span> <span class="keyword">into</span> action
+    
+    <span class="keyword">when</span> action <span class="keyword">is</span> <span class="string">"TALK"</span>:
+        <span class="keyword">whisper</span> <span class="string">"\\nThe wizard smiles and gives you a magical amulet!"</span>
+        <span class="keyword">whisper</span> <span class="string">"'This will protect you,' he says."</span>
+        <span class="keyword">whisper</span> <span class="string">"✨ You gained: Magic Amulet"</span>
+        <span class="keyword">whisper</span> <span class="string">"🎉 GOOD ENDING: You made a powerful ally!"</span>
+    
+    <span class="keyword">otherwise</span>:
+        <span class="keyword">whisper</span> <span class="string">"\\nYou walk past the wizard."</span>
+        <span class="keyword">whisper</span> <span class="string">"He looks disappointed and disappears."</span>
+        <span class="keyword">whisper</span> <span class="string">"😔 NEUTRAL ENDING: You missed an opportunity."</span>
+
+<span class="keyword">or when</span> choice <span class="keyword">is</span> <span class="string">"RIGHT"</span>:
+    <span class="keyword">whisper</span> <span class="string">"\\nYou take the bright right path."</span>
+    <span class="keyword">whisper</span> <span class="string">"You discover a clearing with a treasure chest!"</span>
+    
+    <span class="keyword">ask</span> <span class="string">"Do you OPEN it or LEAVE it?"</span> <span class="keyword">into</span> action
+    
+    <span class="keyword">when</span> action <span class="keyword">is</span> <span class="string">"OPEN"</span>:
+        <span class="keyword">let</span> trap <span class="keyword">be</span> randint(<span class="number">1</span>, <span class="number">2</span>)
+        
+        <span class="keyword">when</span> trap <span class="keyword">is</span> <span class="number">1</span>:
+            <span class="keyword">whisper</span> <span class="string">"\\n💰 The chest contains gold coins!"</span>
+            <span class="keyword">whisper</span> <span class="string">"🎉 BEST ENDING: You're rich!"</span>
+        <span class="keyword">otherwise</span>:
+            <span class="keyword">whisper</span> <span class="string">"\\n💥 It was a trap! Poison gas fills the air!"</span>
+            <span class="keyword">whisper</span> <span class="string">"☠️ BAD ENDING: Game Over"</span>
+    
+    <span class="keyword">otherwise</span>:
+        <span class="keyword">whisper</span> <span class="string">"\\nYou wisely leave the suspicious chest."</span>
+        <span class="keyword">whisper</span> <span class="string">"You find a safe path home."</span>
+        <span class="keyword">whisper</span> <span class="string">"✅ SAFE ENDING: You survived!"</span>
+
+<span class="keyword">otherwise</span>:
+    <span class="keyword">whisper</span> <span class="string">"\\nYou stand frozen, unable to decide."</span>
+    <span class="keyword">whisper</span> <span class="string">"The forest grows dark around you..."</span>
+    <span class="keyword">whisper</span> <span class="string">"😨 CONFUSED ENDING: You got lost!"</span>
+
+<span class="keyword">whisper</span> <span class="string">"\\nThanks for playing!"</span>`,
+        },
+        rpg: {
+          title: "🐉 RPG Dragon Battle",
+          description:
+            "A complete RPG battle system with health, potions, and strategic choices.",
+          code: `<span class="comment"># Complete RPG Dragon Battle</span>
+
+<span class="keyword">there is a</span> player <span class="keyword">with</span> health <span class="number">100</span>, attack <span class="number">20</span>, potions <span class="number">3</span>, gold <span class="number">0</span>
+<span class="keyword">there is a</span> dragon <span class="keyword">with</span> health <span class="number">150</span>, attack <span class="number">25</span>, treasure <span class="number">500</span>
+
+<span class="keyword">whisper</span> <span class="string">"==================================="</span>
+<span class="keyword">whisper</span> <span class="string">"🐉 DRAGON BATTLE RPG"</span>
+<span class="keyword">whisper</span> <span class="string">"==================================="</span>
+<span class="keyword">whisper</span> <span class="string">"A fearsome dragon blocks your path!"</span>
+<span class="keyword">whisper</span> <span class="string">"Defeat it to claim its treasure!"</span>
+<span class="keyword">whisper</span> <span class="string">"\\n"</span>
+
+<span class="keyword">while</span> player health <span class="keyword">greater than</span> <span class="number">0</span> <span class="keyword">and</span> dragon health <span class="keyword">greater than</span> <span class="number">0</span>:
+    <span class="comment"># Display status</span>
+    <span class="keyword">whisper</span> <span class="string">"-----------------------------------"</span>
+    <span class="keyword">show</span> <span class="string">"⚔️  Your Health: "</span> + player health + <span class="string">" HP"</span>
+    <span class="keyword">show</span> <span class="string">"🧪 Potions: "</span> + player potions
+    <span class="keyword">show</span> <span class="string">"🐉 Dragon Health: "</span> + dragon health + <span class="string">" HP"</span>
+    <span class="keyword">whisper</span> <span class="string">"-----------------------------------"</span>
+    
+    <span class="comment"># Player turn</span>
+    <span class="keyword">whisper</span> <span class="string">"\\nWhat will you do?"</span>
+    <span class="keyword">whisper</span> <span class="string">"1. Attack"</span>
+    <span class="keyword">whisper</span> <span class="string">"2. Use Potion"</span>
+    <span class="keyword">whisper</span> <span class="string">"3. Defend"</span>
+    
+    <span class="keyword">ask</span> <span class="string">"Choose action (1-3):"</span> <span class="keyword">into</span> action
+    
+    <span class="keyword">let</span> defended <span class="keyword">be</span> <span class="number">0</span>
+    
+    <span class="keyword">when</span> action <span class="keyword">is</span> <span class="number">1</span>:
+        <span class="keyword">let</span> damage <span class="keyword">be</span> randint(<span class="number">15</span>, <span class="number">25</span>)
+        <span class="keyword">the</span> dragon <span class="keyword">loses</span> damage health
+        <span class="keyword">whisper</span> <span class="string">"\\n⚔️  You attack for "</span> + damage + <span class="string">" damage!"</span>
+    
+    <span class="keyword">or when</span> action <span class="keyword">is</span> <span class="number">2</span>:
+        <span class="keyword">when</span> player potions <span class="keyword">greater than</span> <span class="number">0</span>:
+            <span class="keyword">the</span> player <span class="keyword">gains</span> <span class="number">30</span> health
+            <span class="keyword">the</span> player <span class="keyword">loses</span> <span class="number">1</span> potions
+            <span class="keyword">whisper</span> <span class="string">"\\n🧪 You drink a potion and restore 30 HP!"</span>
+            
+            <span class="keyword">when</span> player health <span class="keyword">greater than</span> <span class="number">100</span>:
+                <span class="keyword">set</span> player health <span class="keyword">to</span> <span class="number">100</span>
+        <span class="keyword">otherwise</span>:
+            <span class="keyword">whisper</span> <span class="string">"\\n❌ No potions left!"</span>
+    
+    <span class="keyword">or when</span> action <span class="keyword">is</span> <span class="number">3</span>:
+        <span class="keyword">set</span> defended <span class="keyword">to</span> <span class="number">1</span>
+        <span class="keyword">whisper</span> <span class="string">"\\n🛡️  You brace for the dragon's attack!"</span>
+    
+    <span class="keyword">otherwise</span>:
+        <span class="keyword">whisper</span> <span class="string">"\\n❓ Invalid action! You stand confused!"</span>
+    
+    <span class="comment"># Check if dragon defeated</span>
+    <span class="keyword">is</span> dragon health <span class="keyword">less than</span> <span class="number">1</span>?
+        <span class="keyword">yes</span>:
+            <span class="keyword">whisper</span> <span class="string">"\\n🎉 VICTORY!"</span>
+            <span class="keyword">whisper</span> <span class="string">"The mighty dragon falls!"</span>
+            <span class="keyword">the</span> player <span class="keyword">gains</span> <span class="number">500</span> gold
+            <span class="keyword">whisper</span> <span class="string">"💰 You obtained "</span> + dragon treasure + <span class="string">" gold!"</span>
+            <span class="keyword">stop</span>
+    
+    <span class="comment"># Dragon turn</span>
+    <span class="keyword">whisper</span> <span class="string">"\\n🐉 The dragon attacks!"</span>
+    <span class="keyword">let</span> dragon_damage <span class="keyword">be</span> randint(<span class="number">20</span>, <span class="number">30</span>)
+    
+    <span class="keyword">when</span> defended <span class="keyword">is</span> <span class="number">1</span>:
+        <span class="keyword">let</span> dragon_damage <span class="keyword">be</span> dragon_damage / <span class="number">2</span>
+        <span class="keyword">whisper</span> <span class="string">"🛡️  Your defense reduces damage!"</span>
+    
+    <span class="keyword">the</span> player <span class="keyword">loses</span> dragon_damage health
+    <span class="keyword">show</span> <span class="string">"💥 You take "</span> + dragon_damage + <span class="string">" damage!"</span>
+    
+    <span class="comment"># Check if player defeated</span>
+    <span class="keyword">is</span> player health <span class="keyword">less than</span> <span class="number">1</span>?
+        <span class="keyword">yes</span>:
+            <span class="keyword">whisper</span> <span class="string">"\\n💀 DEFEAT!"</span>
+            <span class="keyword">whisper</span> <span class="string">"You have been slain by the dragon..."</span>
+            <span class="keyword">whisper</span> <span class="string">"GAME OVER"</span>
+            <span class="keyword">stop</span>
+    
+    <span class="keyword">whisper</span> <span class="string">"\\n"</span>
+
+<span class="keyword">whisper</span> <span class="string">"\\nThanks for playing!"</span>`,
+        },
+      };
+
+      function showExample(exampleKey) {
+        const example = examples[exampleKey];
+        document.getElementById("modal-title").innerHTML = example.title;
+        document.getElementById("modal-description").textContent =
+          example.description;
+        document.getElementById("modal-code").innerHTML = example.code;
+        document.getElementById("modal").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        document.getElementById("modal").classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      function toggleMenu() {
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.getElementById("navLinks");
+        hamburger.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      }
+
+      // Close modal on escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+
+      // Close modal when clicking outside
+      document.getElementById("modal").addEventListener("click", function (e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+
+      // Close mobile menu when clicking a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          document.querySelector(".hamburger").classList.remove("active");
+          document.getElementById("navLinks").classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

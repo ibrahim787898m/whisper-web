@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Tutorial - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 3%;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: #b8c5d6;
+      }
+
+      .lesson {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .lesson h2 {
+        color: #8ab4f8;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .lesson h3 {
+        color: #7dd3fc;
+        font-size: 1.4rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .lesson p {
+        color: #b8c5d6;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+
+      .lesson ul,
+      .lesson ol {
+        color: #b8c5d6;
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .lesson li {
+        margin-bottom: 0.5rem;
+      }
+
+      .code-block {
+        background: #0a0e27;
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        margin: 0;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+
+      .keyword {
+        color: #c58af9;
+        font-weight: 600;
+      }
+      .string {
+        color: #7dd3fc;
+      }
+      .number {
+        color: #fbbf24;
+      }
+      .comment {
+        color: #6b7280;
+        font-style: italic;
+      }
+
+      .output-block {
+        background: rgba(34, 197, 94, 0.1);
+        border-left: 4px solid #22c55e;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        color: #86efac;
+        font-family: "Consolas", "Monaco", monospace;
+      }
+
+      .output-block::before {
+        content: "Output:";
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #22c55e;
+      }
+
+      .tip-box {
+        background: rgba(138, 180, 248, 0.1);
+        border-left: 4px solid #8ab4f8;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+      }
+
+      .tip-box::before {
+        content: "💡 Tip: ";
+        font-weight: bold;
+        color: #8ab4f8;
+      }
+
+      .try-it {
+        background: rgba(197, 138, 249, 0.1);
+        border-left: 4px solid #c58af9;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+      }
+
+      .try-it::before {
+        content: "🎯 Try It Yourself: ";
+        font-weight: bold;
+        color: #c58af9;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .lesson-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Universal Code Block Styling with Copy Button */
+      .code-block {
+        position: relative;
+        margin: 2rem 0;
+      }
+
+      .code-block pre {
+        position: relative;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(138, 180, 248, 0.2);
+        border: 1px solid rgba(138, 180, 248, 0.3);
+        color: #8ab4f8;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .copy-btn:hover {
+        background: rgba(138, 180, 248, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+      }
+
+      /* Mobile devices (320px - 480px) */
+      @media (max-width: 480px) {
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .page-header p {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 2rem 3%;
+        }
+
+        .lesson {
+          padding: 1.5rem;
+        }
+
+        .lesson h2 {
+          font-size: 1.3rem;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .lesson h3 {
+          font-size: 1.1rem;
+        }
+
+        .lesson-number {
+          min-width: 35px;
+          height: 35px;
+          font-size: 1rem;
+        }
+
+        .code-block {
+          padding: 1rem;
+        }
+
+        .code-block pre {
+          font-size: 0.85rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Tablets (481px - 768px) */
+      @media (min-width: 481px) and (max-width: 768px) {
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .container {
+          padding: 3rem 3%;
+        }
+
+        .lesson {
+          padding: 2rem;
+        }
+
+        .lesson h2 {
+          font-size: 1.6rem;
+        }
+
+        .code-block pre {
+          font-size: 0.9rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .container {
+          max-width: 900px;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .lesson h2 {
+          font-size: 1.8rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Desktops (1025px - 1440px) */
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        .container {
+          max-width: 1000px;
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .container {
+          max-width: 1200px;
+        }
+
+        .page-header h1 {
+          font-size: 3.5rem;
+        }
+
+        .lesson h2 {
+          font-size: 2.3rem;
+        }
+
+        .lesson h3 {
+          font-size: 1.6rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .footer-content {
+          max-width: 1600px;
+        }
+      }
+
+      /* Hamburger menu for tablets and mobile */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>🎓 Learn Whisper</h1>
+        <p>Master conversational programming step by step</p>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">1</span> Hello World</h2>
+        <p>
+          Let's start with the classic "Hello World" program. In Whisper, you
+          use the <code>whisper</code> command to output text.
+        </p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">whisper</span> <span class="string">"Hello, World!"</span></code></pre>
+        </div>
+
+        <div class="output-block">Hello, World!</div>
+
+        <p>You can also use other output commands:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">show</span> <span class="string">"This also works!"</span>
+<span class="keyword">tell me</span> <span class="string">"So does this!"</span>
+<span class="keyword">just say</span> <span class="string">"And this too!"</span></code></pre>
+        </div>
+
+        <div class="try-it">
+          Create a file called <code>hello.wsp</code> and write a program that
+          displays your name!
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">2</span> Variables</h2>
+        <p>
+          Variables in Whisper use natural language. There are multiple ways to
+          create them:
+        </p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="comment"># Method 1: Using "let"</span>
+<span class="keyword">let</span> name <span class="keyword">be</span> <span class="string">"Alice"</span>
+<span class="keyword">let</span> age <span class="keyword">be</span> <span class="number">25</span>
+
+<span class="comment"># Method 2: Using "remember that"</span>
+<span class="keyword">remember that</span> score <span class="keyword">is</span> <span class="number">100</span>
+
+<span class="comment"># Method 3: Using "set"</span>
+<span class="keyword">set</span> level <span class="keyword">to</span> <span class="number">5</span>
+
+<span class="comment"># Method 4: Using "so"</span>
+<span class="keyword">so</span> points <span class="keyword">is</span> <span class="number">50</span></code></pre>
+        </div>
+
+        <p>Display variables:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">whisper</span> <span class="string">"My name is "</span> + name
+<span class="keyword">show</span> <span class="string">"I am "</span> + age + <span class="string">" years old"</span></code></pre>
+        </div>
+
+        <div class="tip-box">
+          All these methods do the same thing - choose the one that reads most
+          naturally to you!
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">3</span> User Input</h2>
+        <p>Get input from users with the <code>ask</code> command:</p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">ask</span> <span class="string">"What is your name?"</span> <span class="keyword">into</span> username
+<span class="keyword">whisper</span> <span class="string">"Hello, "</span> + username + <span class="string">"!"</span>
+
+<span class="keyword">ask</span> <span class="string">"How old are you?"</span> <span class="keyword">into</span> user_age
+<span class="keyword">whisper</span> <span class="string">"You are "</span> + user_age + <span class="string">" years old"</span></code></pre>
+        </div>
+
+        <div class="try-it">
+          Create a program that asks for someone's favorite color and displays a
+          personalized message!
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">4</span> Conditionals</h2>
+        <p>Whisper has two styles of conditionals:</p>
+
+        <h3>Style 1: When/Or When/Otherwise</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">let</span> age <span class="keyword">be</span> <span class="number">20</span>
+
+<span class="keyword">when</span> age <span class="keyword">greater than</span> <span class="number">18</span>:
+    <span class="keyword">whisper</span> <span class="string">"You are an adult"</span>
+<span class="keyword">or when</span> age <span class="keyword">equals</span> <span class="number">18</span>:
+    <span class="keyword">whisper</span> <span class="string">"Just turned 18!"</span>
+<span class="keyword">otherwise</span>:
+    <span class="keyword">whisper</span> <span class="string">"You are a minor"</span></code></pre>
+        </div>
+
+        <h3>Style 2: Question Format</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">let</span> score <span class="keyword">be</span> <span class="number">85</span>
+
+<span class="keyword">is</span> score <span class="keyword">greater than</span> <span class="number">60</span>?
+    <span class="keyword">yes</span>:
+        <span class="keyword">whisper</span> <span class="string">"You passed!"</span>
+    <span class="keyword">no</span>:
+        <span class="keyword">whisper</span> <span class="string">"Try again"</span></code></pre>
+        </div>
+
+        <p>Comparison operators you can use:</p>
+        <ul>
+          <li><code>is</code> or <code>equals</code> - Check equality</li>
+          <li><code>not</code> - Check inequality</li>
+          <li>
+            <code>greater than</code> or <code>bigger than</code> - Check if
+            larger
+          </li>
+          <li>
+            <code>less than</code> or <code>smaller than</code> - Check if
+            smaller
+          </li>
+        </ul>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">5</span> Loops</h2>
+        <p>Whisper offers multiple loop styles:</p>
+
+        <h3>While Loop</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">let</span> count <span class="keyword">be</span> <span class="number">1</span>
+
+<span class="keyword">while</span> count <span class="keyword">less than</span> <span class="number">6</span>:
+    <span class="keyword">whisper</span> <span class="string">"Count: "</span> + count
+    <span class="keyword">increase</span> count <span class="keyword">by</span> <span class="number">1</span></code></pre>
+        </div>
+
+        <h3>Repeat Loop</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">repeat</span> <span class="number">5</span>:
+    <span class="keyword">whisper</span> <span class="string">"Hello!"</span>
+
+<span class="comment"># or</span>
+<span class="keyword">do</span> <span class="number">3</span> <span class="keyword">times</span>:
+    <span class="keyword">whisper</span> <span class="string">"Hi there!"</span></code></pre>
+        </div>
+
+        <h3>For Each Loop</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="keyword">make</span> fruits <span class="keyword">with</span> [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"orange"</span>]
+
+<span class="keyword">for each</span> fruit <span class="keyword">in</span> fruits:
+    <span class="keyword">whisper</span> <span class="string">"I like "</span> + fruit</code></pre>
+        </div>
+
+        <p>Loop control:</p>
+        <ul>
+          <li><code>break</code> or <code>stop</code> - Exit the loop</li>
+          <li>
+            <code>continue</code> or <code>skip</code> - Skip to next iteration
+          </li>
+        </ul>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">6</span> Functions</h2>
+        <p>Create reusable code with functions:</p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="comment"># Define a simple function</span>
+<span class="keyword">define</span> greet:
+    <span class="keyword">whisper</span> <span class="string">"Hello from function!"</span>
+
+<span class="comment"># Call the function</span>
+<span class="keyword">call</span> greet
+
+<span class="comment"># Function with parameters</span>
+<span class="keyword">define</span> greet_person <span class="keyword">with</span> name:
+    <span class="keyword">whisper</span> <span class="string">"Hello, "</span> + name + <span class="string">"!"</span>
+
+<span class="keyword">call</span> greet_person <span class="keyword">with</span> <span class="string">"Alice"</span>
+
+<span class="comment"># Function that returns a value</span>
+<span class="keyword">define</span> add <span class="keyword">with</span> a, b:
+    <span class="keyword">give back</span> a + b
+
+<span class="keyword">call</span> add <span class="keyword">with</span> <span class="number">5</span>, <span class="number">3</span>
+<span class="keyword">whisper</span> <span class="string">"Sum: "</span> + __last_result__</code></pre>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">7</span> Story Objects</h2>
+        <p>Create game characters and objects with natural syntax:</p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="comment"># Create a hero character</span>
+<span class="keyword">there is a</span> hero <span class="keyword">with</span> health <span class="number">100</span>, power <span class="number">50</span>
+
+<span class="comment"># Access properties</span>
+<span class="keyword">show</span> hero health
+<span class="keyword">show</span> <span class="string">"Power: "</span> + hero power
+
+<span class="comment"># Modify properties</span>
+<span class="keyword">the</span> hero <span class="keyword">loses</span> <span class="number">20</span> health
+<span class="keyword">the</span> hero <span class="keyword">gains</span> <span class="number">10</span> power
+
+<span class="keyword">show</span> <span class="string">"Health: "</span> + hero health
+<span class="keyword">show</span> <span class="string">"Power: "</span> + hero power</code></pre>
+        </div>
+
+        <div class="try-it">
+          Create a simple RPG character with stats like health, attack, and
+          defense. Make them gain and lose stats!
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">8</span> Lists & Arrays</h2>
+        <p>Work with collections of data:</p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="comment"># Create a list</span>
+<span class="keyword">make</span> tasks <span class="keyword">with</span> [<span class="string">"Buy milk"</span>, <span class="string">"Call mom"</span>]
+
+<span class="comment"># Add items</span>
+<span class="keyword">add</span> <span class="string">"Study Whisper"</span> <span class="keyword">to</span> tasks
+<span class="keyword">add</span> <span class="string">"Exercise"</span> <span class="keyword">to</span> tasks
+
+<span class="comment"># Display all items</span>
+<span class="keyword">for each</span> task <span class="keyword">in</span> tasks:
+    <span class="keyword">whisper</span> task
+
+<span class="comment"># Remove an item</span>
+<span class="keyword">remove</span> <span class="string">"Call mom"</span> <span class="keyword">from</span> tasks</code></pre>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">9</span> Math Operations</h2>
+        <p>Whisper supports all basic math and advanced functions:</p>
+
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code><span class="comment"># Basic operations</span>
+<span class="keyword">let</span> sum <span class="keyword">be</span> <span class="number">10</span> + <span class="number">5</span>
+<span class="keyword">let</span> diff <span class="keyword">be</span> <span class="number">10</span> - <span class="number">5</span>
+<span class="keyword">let</span> product <span class="keyword">be</span> <span class="number">10</span> * <span class="number">5</span>
+<span class="keyword">let</span> quotient <span class="keyword">be</span> <span class="number">10</span> / <span class="number">5</span>
+
+<span class="comment"># Math functions</span>
+<span class="keyword">let</span> root <span class="keyword">be</span> sqrt(<span class="number">16</span>)
+<span class="keyword">let</span> power <span class="keyword">be</span> pow(<span class="number">2</span>, <span class="number">3</span>)
+<span class="keyword">let</span> absolute <span class="keyword">be</span> abs(<span class="number">-10</span>)
+<span class="keyword">let</span> rounded <span class="keyword">be</span> round(<span class="number">3.7</span>)
+<span class="keyword">let</span> biggest <span class="keyword">be</span> max(<span class="number">5</span>, <span class="number">10</span>, <span class="number">3</span>)
+<span class="keyword">let</span> smallest <span class="keyword">be</span> min(<span class="number">5</span>, <span class="number">10</span>, <span class="number">3</span>)</code></pre>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <h2><span class="lesson-number">10</span> What's Next?</h2>
+        <p>
+          Congratulations! You've learned the basics of Whisper. Here's what to
+          explore next:
+        </p>
+
+        <ul>
+          <li>
+            <strong
+              ><a href="documentation.html" style="color: #8ab4f8"
+                >Full Documentation</a
+              ></strong
+            >
+            - Complete language reference
+          </li>
+          <li>
+            <strong
+              ><a href="examples.html" style="color: #8ab4f8"
+                >Example Programs</a
+              ></strong
+            >
+            - See real projects
+          </li>
+          <li><strong>File Handling</strong> - Read and write files</li>
+          <li><strong>Error Handling</strong> - Use attempt/handle blocks</li>
+          <li>
+            <strong>String Operations</strong> - Uppercase, lowercase, and more
+          </li>
+        </ul>
+
+        <div class="tip-box">
+          The best way to learn is by doing! Try modifying the examples and
+          creating your own programs.
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+
+      function copyCode(button) {
+        // Find the code element in the same container
+        const container = button.parentElement;
+        const codeElement = container.querySelector("code");
+        const code = codeElement.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            const btnText = button.querySelector(".btn-text");
+            const originalText = btnText.textContent;
+
+            // Change button appearance
+            btnText.textContent = "Copied!";
+            button.classList.add("copied");
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+              btnText.textContent = originalText;
+              button.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            alert("Failed to copy code");
+          });
+      }
+    </script>
+  </body>
+</html>

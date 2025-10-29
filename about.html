@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="About Whisper - Learn about the philosophy, timeline, and future of conversational programming"
+    />
+    <meta
+      name="keywords"
+      content="whisper, about, programming language, philosophy, roadmap"
+    />
+    <meta name="author" content="Ibrahim Mustafa Opu" />
+
+    <meta property="og:title" content="About Whisper Programming Language" />
+    <meta
+      property="og:description"
+      content="The story and vision behind Whisper - making programming natural and accessible"
+    />
+    <meta property="og:type" content="website" />
+
+    <title>About - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .hero {
+        text-align: center;
+        padding: 6rem 3% 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #8ab4f8 0%, #c58af9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero .tagline {
+        font-size: 1.3rem;
+        color: #b8c5d6;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .content-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 3% 4rem;
+      }
+
+      .section {
+        margin-bottom: 6rem;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        color: #b8c5d6;
+        font-size: 1.2rem;
+      }
+
+      .content-box {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .content-box h3 {
+        color: #8ab4f8;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .content-box p {
+        color: #b8c5d6;
+        line-height: 1.9;
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+      }
+
+      .content-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 3rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, #8ab4f8 0%, #c58af9 100%);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        padding-left: 2rem;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -3.5rem;
+        top: 0.5rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #8ab4f8;
+        border: 3px solid #0a0e27;
+        box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.3);
+      }
+
+      .timeline-date {
+        color: #8ab4f8;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+      }
+
+      .timeline-content h3 {
+        color: #8ab4f8;
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+      }
+
+      .timeline-content p {
+        color: #b8c5d6;
+        line-height: 1.8;
+      }
+
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .philosophy-card {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s;
+      }
+
+      .philosophy-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(138, 180, 248, 0.5);
+        box-shadow: 0 8px 24px rgba(138, 180, 248, 0.2);
+      }
+
+      .philosophy-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .philosophy-card h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .philosophy-card p {
+        color: #b8c5d6;
+        line-height: 1.8;
+      }
+
+      .roadmap-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .roadmap-card {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+      }
+
+      .roadmap-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .roadmap-version {
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+
+      .roadmap-status {
+        color: #8ab4f8;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .roadmap-card h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .roadmap-card ul {
+        list-style: none;
+        color: #b8c5d6;
+      }
+
+      .roadmap-card ul li {
+        padding-left: 1.5rem;
+        position: relative;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+      }
+
+      .roadmap-card ul li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #8ab4f8;
+      }
+
+      .thank-you-box {
+        background: linear-gradient(
+          135deg,
+          rgba(138, 180, 248, 0.1) 0%,
+          rgba(197, 138, 249, 0.1) 100%
+        );
+        border: 2px solid rgba(138, 180, 248, 0.3);
+        border-radius: 12px;
+        padding: 4rem 3rem;
+        text-align: center;
+      }
+
+      .thank-you-box h2 {
+        font-size: 2.5rem;
+        color: #8ab4f8;
+        margin-bottom: 1.5rem;
+      }
+
+      .thank-you-box p {
+        font-size: 1.2rem;
+        color: #b8c5d6;
+        line-height: 1.9;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .stat-box {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #b8c5d6;
+        font-size: 1.1rem;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1rem;
+        }
+
+        .hero {
+          padding: 3rem 3% 2rem;
+        }
+
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .content-box {
+          padding: 1.5rem;
+        }
+
+        .timeline {
+          padding-left: 2rem;
+        }
+
+        .timeline-item {
+          padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+          left: -2.4rem;
+        }
+
+        .thank-you-box {
+          padding: 2rem 1.5rem;
+        }
+
+        .thank-you-box h2 {
+          font-size: 1.8rem;
+        }
+
+        .stat-number {
+          font-size: 2rem;
+        }
+      }
+
+      @media (min-width: 481px) and (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .roadmap-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .hero h1 {
+          font-size: 3.2rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.3rem;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Desktops (1025px - 1440px) */
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .hero h1 {
+          font-size: 4.5rem;
+        }
+
+        .hero .tagline {
+          font-size: 1.7rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .features {
+          max-width: 1600px;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h1>🌙 About Whisper</h1>
+      <p class="tagline">
+        The story, philosophy, and vision behind the world's most conversational
+        programming language
+      </p>
+    </section>
+
+    <div class="content-section">
+      <!-- About Whisper Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">What is Whisper?</h2>
+          <p class="section-subtitle">
+            A revolutionary approach to programming
+          </p>
+        </div>
+
+        <div class="content-box">
+          <p>
+            Whisper is a truly unique programming language that transforms
+            coding from a technical challenge into a natural conversation. Born
+            from the belief that programming should be accessible to everyone,
+            Whisper breaks down the barriers between human thought and computer
+            execution.
+          </p>
+
+          <p>
+            Unlike traditional programming languages that require memorizing
+            cryptic syntax and symbols, Whisper allows you to write code using
+            plain English. Commands like "ask", "whisper", "remember that", and
+            "when" make your programs read like stories, turning complex logic
+            into intuitive narratives.
+          </p>
+
+          <p>
+            Whisper is not just a language—it's a philosophy. It represents a
+            fundamental shift in how we think about programming, making it
+            accessible to students, educators, creative writers, and anyone who
+            has ever wanted to bring their ideas to life through code.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Built-in Commands</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Natural Syntax</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Dependencies</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Possibilities</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Philosophy Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Our Philosophy</h2>
+          <p class="section-subtitle">
+            The principles that guide Whisper's development
+          </p>
+        </div>
+
+        <div class="philosophy-grid">
+          <div class="philosophy-card">
+            <div class="philosophy-icon">💬</div>
+            <h3>Natural Communication</h3>
+            <p>
+              Code should read like natural language. If you can write a
+              sentence, you should be able to write a program.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="philosophy-icon">🎓</div>
+            <h3>Accessibility First</h3>
+            <p>
+              Programming should be accessible to everyone, regardless of
+              technical background or experience level.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="philosophy-icon">✨</div>
+            <h3>Creativity Enabled</h3>
+            <p>
+              The best code tells a story. Whisper empowers creative expression
+              through programming.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="philosophy-icon">🚀</div>
+            <h3>Power Through Simplicity</h3>
+            <p>
+              Simple syntax doesn't mean limited functionality. Whisper is both
+              easy to learn and powerful to use.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="philosophy-icon">🌍</div>
+            <h3>Community Driven</h3>
+            <p>
+              Whisper grows through community feedback, contributions, and
+              shared learning experiences.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <div class="philosophy-icon">🔓</div>
+            <h3>Open & Free</h3>
+            <p>
+              Knowledge should be free. Whisper is open-source and will always
+              remain accessible to all.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Project Timeline</h2>
+          <p class="section-subtitle">
+            The journey of Whisper from concept to reality
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Early 2025</div>
+            <div class="timeline-content">
+              <h3>💡 The Idea</h3>
+              <p>
+                Whisper was conceived with a simple question: "What if
+                programming felt like having a conversation?" The vision was to
+                create a language that removes the intimidation factor from
+                coding.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Mid 2025</div>
+            <div class="timeline-content">
+              <h3>🔨 Development Begins</h3>
+              <p>
+                Core interpreter development started. Basic syntax, variables,
+                conditionals, and loops were implemented with a focus on natural
+                language patterns.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">August 2025</div>
+            <div class="timeline-content">
+              <h3>⚡ Feature Expansion</h3>
+              <p>
+                Advanced features added including functions, arrays,
+                dictionaries, file I/O, error handling, and story-driven
+                programming capabilities.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Septempber 2024</div>
+            <div class="timeline-content">
+              <h3>🎨 VS Code Extension</h3>
+              <p>
+                Custom syntax highlighting and language support for Visual
+                Studio Code released, making Whisper development more enjoyable
+                and productive.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">October 2025</div>
+            <div class="timeline-content">
+              <h3>🚀 Version 1.0.0 Launch</h3>
+              <p>
+                Official public release of Whisper v1.0.0! Complete with
+                documentation, examples, PyPI package, and a growing community
+                of enthusiastic users.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Future Roadmap</h2>
+          <p class="section-subtitle">What's next for Whisper</p>
+        </div>
+
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="roadmap-header">
+              <div class="roadmap-version">v1.1</div>
+              <div class="roadmap-status">Q2 2026</div>
+            </div>
+            <h3>Enhanced Features</h3>
+            <ul>
+              <li>Improved error messages</li>
+              <li>More built-in functions</li>
+              <li>Enhanced debugging tools</li>
+              <li>Standard library expansion</li>
+              <li>Performance optimizations</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="roadmap-header">
+              <div class="roadmap-version">v1.5</div>
+              <div class="roadmap-status">Q3 2026</div>
+            </div>
+            <h3>Developer Tools</h3>
+            <ul>
+              <li>Interactive REPL mode</li>
+              <li>Package manager</li>
+              <li>Testing framework</li>
+              <li>More IDE extensions</li>
+              <li>Online playground enhancements</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="roadmap-header">
+              <div class="roadmap-version">v2.0</div>
+              <div class="roadmap-status">Q4 2026</div>
+            </div>
+            <h3>Advanced Capabilities</h3>
+            <ul>
+              <li>Web framework integration</li>
+              <li>Database connectivity</li>
+              <li>API support</li>
+              <li>Multi-language support</li>
+              <li>Community plugins system</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thank You Section -->
+      <div class="section">
+        <div class="thank-you-box">
+          <h2>💙 Thank You</h2>
+          <p>
+            To everyone who believed in the vision of making programming more
+            natural and accessible—thank you. To the early adopters who provided
+            feedback, to the contributors who helped improve Whisper, and to the
+            educators and students who saw the potential in this unique approach
+            to coding.
+          </p>
+          <p>
+            Whisper is more than just a programming language. It's a community
+            of people who believe that technology should be accessible, that
+            learning should be enjoyable, and that anyone with an idea deserves
+            the tools to bring it to life.
+          </p>
+          <p>
+            Together, we're proving that programming doesn't have to be
+            complicated. It can be natural, intuitive, and even fun. Here's to
+            the future of conversational programming, and to all the amazing
+            things we'll create together.
+          </p>
+          <p style="font-size: 1.4rem; color: #8ab4f8; margin-top: 2rem">
+            🌙 Happy Whispering! 🌙
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>

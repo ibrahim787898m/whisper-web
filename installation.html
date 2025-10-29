@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Installation - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 4rem 3%;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: #b8c5d6;
+      }
+
+      .section {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section h2 {
+        color: #8ab4f8;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section h3 {
+        color: #7dd3fc;
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .section p {
+        color: #b8c5d6;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+
+      .section ul,
+      .section ol {
+        color: #b8c5d6;
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .section li {
+        margin-bottom: 0.5rem;
+      }
+
+      .code-block {
+        background: #0a0e27;
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        overflow-x: auto;
+        position: relative;
+      }
+
+      .code-block pre {
+        margin: 0;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.95rem;
+        color: #e0e6ed;
+      }
+
+      .inline-code {
+        background: rgba(138, 180, 248, 0.2);
+        color: #8ab4f8;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .requirement-box {
+        background: rgba(138, 180, 248, 0.1);
+        border-left: 4px solid #8ab4f8;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+      }
+
+      .requirement-box h4 {
+        color: #8ab4f8;
+        margin-bottom: 0.5rem;
+      }
+
+      .success-box {
+        background: rgba(34, 197, 94, 0.1);
+        border-left: 4px solid #22c55e;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        color: #86efac;
+      }
+
+      .warning-box {
+        background: rgba(251, 191, 36, 0.1);
+        border-left: 4px solid #fbbf24;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        color: #fde68a;
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        background: linear-gradient(135deg, #8ab4f8 0%, #6b9ce8 100%);
+        color: #0a0e27;
+        border-radius: 50%;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Universal Code Block Styling with Copy Button */
+      .code-block {
+        position: relative;
+        margin: 2rem 0;
+      }
+
+      .code-block pre {
+        position: relative;
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(138, 180, 248, 0.2);
+        border: 1px solid rgba(138, 180, 248, 0.3);
+        color: #8ab4f8;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .copy-btn:hover {
+        background: rgba(138, 180, 248, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+      }
+
+      /* Mobile devices (320px - 480px) */
+      @media (max-width: 480px) {
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .page-header p {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 2rem 3%;
+        }
+
+        .section {
+          padding: 1.5rem;
+        }
+
+        .section h2 {
+          font-size: 1.5rem;
+        }
+
+        .section h3 {
+          font-size: 1.1rem;
+        }
+
+        .code-block {
+          padding: 1rem;
+        }
+
+        .code-block pre {
+          font-size: 0.85rem;
+        }
+
+        .step-number {
+          width: 30px;
+          height: 30px;
+          font-size: 0.9rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 1rem !important;
+          padding-bottom: 1rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Tablets (481px - 768px) */
+      @media (min-width: 481px) and (max-width: 768px) {
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .container {
+          padding: 3rem 3%;
+        }
+
+        .section {
+          padding: 2rem;
+        }
+
+        .code-block pre {
+          font-size: 0.9rem;
+        }
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 1rem !important;
+          padding-bottom: 1rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .container {
+          max-width: 800px;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Desktops (1025px - 1440px) */
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        .container {
+          max-width: 900px;
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .container {
+          max-width: 1100px;
+        }
+
+        .page-header h1 {
+          font-size: 3.5rem;
+        }
+
+        .section h2 {
+          font-size: 2rem;
+        }
+
+        .nav-container {
+          max-width: 1600px;
+        }
+
+        .footer-content {
+          max-width: 1600px;
+        }
+      }
+
+      /* Hamburger menu for tablets and mobile */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>📦 Installation Guide</h1>
+        <p>Get Whisper up and running in minutes</p>
+      </div>
+
+      <div class="section">
+        <h2>⚙️ Requirements</h2>
+        <div class="requirement-box">
+          <h4>System Requirements</h4>
+          <ul>
+            <li><strong>Python:</strong> 3.7 or higher</li>
+            <li><strong>Operating System:</strong> Windows, macOS, or Linux</li>
+            <li>
+              <strong>Dependencies:</strong> None (Whisper has no external
+              dependencies!)
+            </li>
+          </ul>
+        </div>
+        <p>
+          Before installing Whisper, make sure you have Python installed on your
+          system. You can check your Python version by running:
+        </p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>python --version</code></pre>
+        </div>
+        <p>or</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>python3 --version</code></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🚀 Quick Installation</h2>
+        <p>The easiest way to install Whisper is using pip:</p>
+
+        <h3><span class="step-number">1</span> Install via pip</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>pip install whisper-lang</code></pre>
+        </div>
+
+        <h3><span class="step-number">2</span> Verify Installation</h3>
+        <p>After installation, verify that Whisper is installed correctly:</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>whisper --version</code></pre>
+        </div>
+        <div class="success-box">
+          ✅ If installation was successful, you should see:
+          <strong>Whisper v1.0.0</strong>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📥 Installation from Source</h2>
+        <p>
+          If you want to install Whisper from source or contribute to
+          development:
+        </p>
+
+        <h3><span class="step-number">1</span> Clone the Repository</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre>
+<code>git clone https://github.com/ibrahim787898m/whisper.git
+cd whisper</code></pre>
+        </div>
+
+        <h3><span class="step-number">2</span> Install in Development Mode</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>pip install -e .</code></pre>
+        </div>
+        <p>
+          This will install Whisper in editable mode, allowing you to make
+          changes to the source code.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>🎯 Running Your First Program</h2>
+        <p>
+          Once installed, you can run Whisper programs using the
+          <span class="inline-code">whisper</span> command:
+        </p>
+
+        <h3>Create a Hello World Program</h3>
+        <p>
+          Create a file named <span class="inline-code">hello.wsp</span> or
+          <span class="inline-code">hello.whisper</span> with the following
+          content:
+        </p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre>
+<code>whisper "Hello, World!"
+whisper "Welcome to Whisper programming!"</code></pre>
+        </div>
+
+        <h3>Run the Program</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>whisper hello.wsp</code></pre>
+        </div>
+        <p>or</p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">
+            <span>📋</span>
+            <span class="btn-text">Copy</span>
+          </button>
+
+          <pre><code>whisper hello.whisper</code></pre>
+        </div>
+
+        <div class="success-box">
+          🎉 Congratulations! You've just run your first Whisper program!
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🎨 Setting Up VS Code (Optional)</h2>
+        <p>
+          For the best development experience, install the Whisper extension for
+          Visual Studio Code:
+        </p>
+
+        <h3><span class="step-number">1</span> Install VS Code</h3>
+        <p>
+          Download and install Visual Studio Code from
+          <a
+            href="https://code.visualstudio.com/"
+            target="_blank"
+            style="color: #8ab4f8"
+            >code.visualstudio.com</a
+          >
+        </p>
+
+        <h3><span class="step-number">2</span> Install Whisper Extension</h3>
+        <p>
+          Copy the Whisper extension folder to your VS Code extensions
+          directory:
+        </p>
+        <ul>
+          <li>
+            <strong>Windows:</strong>
+            <span class="inline-code">%USERPROFILE%\.vscode\extensions\</span>
+          </li>
+          <li>
+            <strong>macOS/Linux:</strong>
+            <span class="inline-code">~/.vscode/extensions/</span>
+          </li>
+        </ul>
+
+        <h3><span class="step-number">3</span> Reload VS Code</h3>
+        <p>
+          Restart VS Code to activate the Whisper extension. You'll now have
+          syntax highlighting for <span class="inline-code">.wsp</span> and
+          <span class="inline-code">.whisper</span> files!
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>❓ Troubleshooting</h2>
+
+        <h3>Command Not Found</h3>
+        <p>If you get a "command not found" error after installation:</p>
+        <ul>
+          <li>Make sure Python's Scripts directory is in your PATH</li>
+          <li>
+            Try using <span class="inline-code">python -m whisper</span> instead
+            of just <span class="inline-code">whisper</span>
+          </li>
+          <li>Restart your terminal/command prompt after installation</li>
+        </ul>
+
+        <h3>Permission Errors</h3>
+        <p>If you encounter permission errors during installation:</p>
+        <ul>
+          <li>
+            Try installing with
+            <span class="inline-code">pip install --user whisper-lang</span>
+          </li>
+          <li>Or use a virtual environment (recommended)</li>
+        </ul>
+
+        <div class="warning-box">
+          💡 <strong>Tip:</strong> Using a virtual environment is recommended
+          for Python projects. Create one with
+          <span class="inline-code">python -m venv venv</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🎓 Next Steps</h2>
+        <p>Now that you have Whisper installed, here's what to do next:</p>
+        <ol>
+          <li>
+            <strong
+              ><a href="tutorial.html" style="color: #8ab4f8"
+                >Start the Tutorial</a
+              ></strong
+            >
+            - Learn Whisper step by step
+          </li>
+          <li>
+            <strong
+              ><a href="examples.html" style="color: #8ab4f8"
+                >Browse Examples</a
+              ></strong
+            >
+            - See real Whisper programs in action
+          </li>
+          <li>
+            <strong
+              ><a href="documentation.html" style="color: #8ab4f8"
+                >Read the Docs</a
+              ></strong
+            >
+            - Complete language reference
+          </li>
+          <li>
+            <strong
+              ><a href="contribute.html" style="color: #8ab4f8"
+                >Join the Community</a
+              ></strong
+            >
+            - Contribute and get help
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+
+      function copyCode(button) {
+        // Find the code element in the same container
+        const container = button.parentElement;
+        const codeElement = container.querySelector("code");
+        const code = codeElement.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            const btnText = button.querySelector(".btn-text");
+            const originalText = btnText.textContent;
+
+            // Change button appearance
+            btnText.textContent = "Copied!";
+            button.classList.add("copied");
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+              btnText.textContent = originalText;
+              button.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            alert("Failed to copy code");
+          });
+      }
+    </script>
+  </body>
+</html>

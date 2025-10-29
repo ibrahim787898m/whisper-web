@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Documentation - Whisper Programming Language</title>
+    <link rel="icon" type="image/png" href="images/whisper-icon.png" />
+    <script
+      src="https://kit.fontawesome.com/a131e907f3.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0e27 0%,
+          #1a1f3a 50%,
+          #2d1b4e 100%
+        );
+        color: #e0e6ed;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 3%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #8ab4f8;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .logo span {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #8ab4f8;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #8ab4f8;
+        border-radius: 3px;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      .docs-layout {
+        display: flex;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 3%;
+        gap: 3rem;
+      }
+
+      .sidebar {
+        width: 280px;
+        position: sticky;
+        top: 60px;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2rem;
+      }
+
+      .sidebar h3 {
+        color: #8ab4f8;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-nav {
+        list-style: none;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 0.8rem;
+      }
+
+      .sidebar-nav a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: block;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .sidebar-nav a:hover {
+        color: #8ab4f8;
+        background: rgba(138, 180, 248, 0.1);
+      }
+
+      .sidebar-nav a.active {
+        color: #8ab4f8;
+        background: rgba(138, 180, 248, 0.2);
+        font-weight: 600;
+      }
+
+      .content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .page-header {
+        margin-bottom: 3rem;
+      }
+
+      .page-header h1 {
+        font-size: 3rem;
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: #b8c5d6;
+      }
+
+      .doc-section {
+        background: rgba(26, 31, 58, 0.6);
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        scroll-margin-top: 100px;
+      }
+
+      .doc-section h2 {
+        color: #8ab4f8;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .doc-section h3 {
+        color: #7dd3fc;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .doc-section h4 {
+        color: #c58af9;
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .doc-section p {
+        color: #b8c5d6;
+        margin-bottom: 1rem;
+        line-height: 1.8;
+      }
+
+      .doc-section ul,
+      .doc-section ol {
+        color: #b8c5d6;
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .doc-section li {
+        margin-bottom: 0.5rem;
+      }
+
+      .code-block {
+        background: #0a0e27;
+        border: 1px solid rgba(138, 180, 248, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        margin: 0;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+
+      .inline-code {
+        background: rgba(138, 180, 248, 0.2);
+        color: #8ab4f8;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .keyword {
+        color: #c58af9;
+        font-weight: 600;
+      }
+      .string {
+        color: #7dd3fc;
+      }
+      .number {
+        color: #fbbf24;
+      }
+      .comment {
+        color: #6b7280;
+        font-style: italic;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(138, 180, 248, 0.2);
+      }
+
+      th {
+        background: rgba(138, 180, 248, 0.1);
+        color: #8ab4f8;
+        font-weight: 600;
+      }
+
+      td {
+        color: #b8c5d6;
+      }
+
+      .footer {
+        background: rgba(10, 14, 39, 0.95);
+        padding: 3rem 3%;
+        margin-top: 6rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .footer-section h3 {
+        color: #8ab4f8;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: #b8c5d6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: #8ab4f8;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(138, 180, 248, 0.1);
+        color: #6b7280;
+      }
+
+      .footer-bottom a {
+        color: #e0e6ed;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .footer-bottom a:hover {
+        color: #8ab4f8;
+      }
+
+      /* Universal Code Block Styling with Copy Button */
+      .code-block {
+        position: relative;
+        margin: 2rem 0;
+      }
+
+      .code-block pre {
+        position: relative;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(138, 180, 248, 0.2);
+        border: 1px solid rgba(138, 180, 248, 0.3);
+        color: #8ab4f8;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .copy-btn:hover {
+        background: rgba(138, 180, 248, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+      }
+
+      /* Mobile devices (320px - 480px) */
+      @media (max-width: 480px) {
+        .docs-layout {
+          flex-direction: column;
+          padding: 1rem 3%;
+        }
+
+        .sidebar {
+          width: 100%;
+          position: static;
+          padding: 1.5rem;
+        }
+
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .page-header p {
+          font-size: 1rem;
+        }
+
+        .doc-section {
+          padding: 1.5rem;
+        }
+
+        .doc-section h2 {
+          font-size: 1.5rem;
+        }
+
+        .doc-section h3 {
+          font-size: 1.2rem;
+        }
+
+        .code-block {
+          padding: 1rem;
+        }
+
+        .code-block pre {
+          font-size: 0.85rem;
+        }
+
+        .footer-content {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        table {
+          font-size: 0.85rem;
+        }
+
+        th,
+        td {
+          padding: 0.5rem;
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Tablets (481px - 768px) */
+      @media (min-width: 481px) and (max-width: 768px) {
+        .docs-layout {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          position: static;
+        }
+
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .doc-section {
+          padding: 2rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Small laptops (769px - 1024px) */
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .sidebar {
+          width: 240px;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .code-block {
+          position: relative;
+          overflow: visible;
+        }
+
+        .code-block pre {
+          padding-top: 2rem !important;
+          overflow-x: auto;
+          position: relative;
+          scrollbar-width: none;
+        }
+
+        .copy-btn {
+          position: absolute;
+          top: 0.5rem;
+          right: 0;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+          background: linear-gradient(
+            to left,
+            rgba(10, 14, 39, 1) 0%,
+            rgba(10, 14, 39, 1) 70%,
+            rgba(10, 14, 39, 0.8) 85%,
+            rgba(10, 14, 39, 0) 100%
+          );
+          padding-left: 1rem;
+          margin-right: 0.5rem;
+          border: 1px solid rgba(138, 180, 248, 0.3);
+          border-radius: 6px;
+          z-index: 100;
+        }
+
+        .copy-btn span:first-child {
+          display: none; /* Hide emoji on small mobile */
+        }
+      }
+
+      /* Large desktops (1441px+) */
+      @media (min-width: 1441px) {
+        .docs-layout {
+          max-width: 1600px;
+        }
+
+        .sidebar {
+          width: 320px;
+        }
+
+        .page-header h1 {
+          font-size: 3.5rem;
+        }
+
+        .doc-section h2 {
+          font-size: 2.3rem;
+        }
+      }
+
+      /* Hamburger menu for tablets and mobile */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(10, 14, 39, 0.98);
+          flex-direction: column;
+          gap: 0;
+          padding: 2rem 3%;
+          transform: translateY(-100%);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .nav-links li {
+          padding: 1rem 0;
+          border-bottom: 1px solid rgba(138, 180, 248, 0.1);
+        }
+
+        .nav-links li:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <span>🌙</span>
+          <span>Whisper</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="tutorial.html">Tutorial</a></li>
+          <li><a href="documentation.html">Docs</a></li>
+          <li><a href="examples.html">Examples</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <h3>📖 Contents</h3>
+        <ul class="sidebar-nav">
+          <li><a href="#variables">Variables</a></li>
+          <li><a href="#output">Output</a></li>
+          <li><a href="#input">Input</a></li>
+          <li><a href="#conditionals">Conditionals</a></li>
+          <li><a href="#loops">Loops</a></li>
+          <li><a href="#functions">Functions</a></li>
+          <li><a href="#story-objects">Story Objects</a></li>
+          <li><a href="#lists">Lists & Arrays</a></li>
+          <li><a href="#math">Math Operations</a></li>
+          <li><a href="#strings">String Operations</a></li>
+          <li><a href="#files">File Handling</a></li>
+          <li><a href="#errors">Error Handling</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <div class="page-header">
+          <h1>📚 Complete Documentation</h1>
+          <p>Everything you need to know about Whisper</p>
+        </div>
+
+        <section id="variables" class="doc-section">
+          <h2>📦 Variables</h2>
+          <p>
+            Whisper offers multiple natural ways to declare and modify
+            variables.
+          </p>
+
+          <h3>Declaration Methods</h3>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Method 1: Using "let ... be"</span>
+<span class="keyword">let</span> name <span class="keyword">be</span> <span class="string">"Alice"</span>
+<span class="keyword">let</span> age <span class="keyword">be</span> <span class="number">25</span>
+
+<span class="comment"># Method 2: Using "remember that ... is"</span>
+<span class="keyword">remember that</span> score <span class="keyword">is</span> <span class="number">100</span>
+
+<span class="comment"># Method 3: Using "set ... to"</span>
+<span class="keyword">set</span> level <span class="keyword">to</span> <span class="number">5</span>
+
+<span class="comment"># Method 4: Using "so ... is"</span>
+<span class="keyword">so</span> points <span class="keyword">is</span> <span class="number">50</span></code></pre>
+          </div>
+
+          <h3>Modifying Variables</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Increment</span>
+<span class="keyword">increase</span> score <span class="keyword">by</span> <span class="number">10</span>
+
+<span class="comment"># Decrement</span>
+<span class="keyword">decrease</span> lives <span class="keyword">by</span> <span class="number">1</span>
+
+<span class="comment"># Delete variable</span>
+<span class="keyword">forget about</span> old_var</code></pre>
+          </div>
+        </section>
+
+        <section id="output" class="doc-section">
+          <h2>💬 Output</h2>
+          <p>Display information to the user with multiple output commands.</p>
+
+          <h3>Output Commands</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="inline-code">whisper</span></td>
+                <td>Display text with newline</td>
+                <td><span class="inline-code">whisper "Hello"</span></td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">show</span></td>
+                <td>Display text with newline</td>
+                <td><span class="inline-code">show message</span></td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">tell me</span></td>
+                <td>Display text with newline</td>
+                <td><span class="inline-code">tell me result</span></td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">just say</span></td>
+                <td>Display text with newline</td>
+                <td><span class="inline-code">just say "Hi"</span></td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">announce</span></td>
+                <td>Display without newline</td>
+                <td><span class="inline-code">announce "Loading..."</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">let</span> name <span class="keyword">be</span> <span class="string">"Bob"</span>
+<span class="keyword">let</span> score <span class="keyword">be</span> <span class="number">95</span>
+
+<span class="keyword">whisper</span> <span class="string">"Player: "</span> + name
+<span class="keyword">show</span> <span class="string">"Score: "</span> + score</code></pre>
+          </div>
+        </section>
+
+        <section id="input" class="doc-section">
+          <h2>⌨️ User Input</h2>
+          <p>Get input from users interactively.</p>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Ask for input and store in variable</span>
+<span class="keyword">ask</span> <span class="string">"What is your name?"</span> <span class="keyword">into</span> username
+<span class="keyword">ask</span> <span class="string">"Enter your age:"</span> <span class="keyword">into</span> age
+
+<span class="keyword">whisper</span> <span class="string">"Hello, "</span> + username
+<span class="keyword">whisper</span> <span class="string">"You are "</span> + age + <span class="string">" years old"</span></code></pre>
+          </div>
+
+          <p>
+            <strong>Note:</strong> Whisper automatically converts numeric input
+            to integers or floats.
+          </p>
+        </section>
+
+        <section id="conditionals" class="doc-section">
+          <h2>🔀 Conditionals</h2>
+          <p>Make decisions in your code with two different styles.</p>
+
+          <h3>Style 1: When/Or When/Otherwise</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">when</span> score <span class="keyword">greater than</span> <span class="number">90</span>:
+    <span class="keyword">whisper</span> <span class="string">"Excellent!"</span>
+<span class="keyword">or when</span> score <span class="keyword">greater than</span> <span class="number">70</span>:
+    <span class="keyword">whisper</span> <span class="string">"Good job!"</span>
+<span class="keyword">otherwise</span>:
+    <span class="keyword">whisper</span> <span class="string">"Keep trying!"</span></code></pre>
+          </div>
+
+          <h3>Style 2: Question Format</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">is</span> age <span class="keyword">greater than</span> <span class="number">18</span>?
+    <span class="keyword">yes</span>:
+        <span class="keyword">whisper</span> <span class="string">"You are an adult"</span>
+    <span class="keyword">no</span>:
+        <span class="keyword">whisper</span> <span class="string">"You are a minor"</span></code></pre>
+          </div>
+
+          <h3>Comparison Operators</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Operator</th>
+                <th>Alternative</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="inline-code">is</span></td>
+                <td><span class="inline-code">equals</span></td>
+                <td>Equal to</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">not</span></td>
+                <td>-</td>
+                <td>Not equal to</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">greater than</span></td>
+                <td><span class="inline-code">bigger than</span></td>
+                <td>Greater than</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">less than</span></td>
+                <td><span class="inline-code">smaller than</span></td>
+                <td>Less than</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="loops" class="doc-section">
+          <h2>🔁 Loops</h2>
+          <p>Repeat code with different loop structures.</p>
+
+          <h3>While Loop</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">let</span> count <span class="keyword">be</span> <span class="number">1</span>
+<span class="keyword">while</span> count <span class="keyword">less than</span> <span class="number">6</span>:
+    <span class="keyword">whisper</span> count
+    <span class="keyword">increase</span> count <span class="keyword">by</span> <span class="number">1</span></code></pre>
+          </div>
+
+          <h3>Repeat Loop</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Method 1</span>
+<span class="keyword">repeat</span> <span class="number">5</span>:
+    <span class="keyword">whisper</span> <span class="string">"Hello!"</span>
+
+<span class="comment"># Method 2</span>
+<span class="keyword">do</span> <span class="number">3</span> <span class="keyword">times</span>:
+    <span class="keyword">whisper</span> <span class="string">"Hi there!"</span></code></pre>
+          </div>
+
+          <h3>For Each Loop</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">make</span> colors <span class="keyword">with</span> [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>]
+<span class="keyword">for each</span> color <span class="keyword">in</span> colors:
+    <span class="keyword">whisper</span> color</code></pre>
+          </div>
+
+          <h3>Loop Control</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Alternatives</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="inline-code">break</span></td>
+                <td><span class="inline-code">stop, end loop</span></td>
+                <td>Exit the loop</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">continue</span></td>
+                <td><span class="inline-code">skip, next</span></td>
+                <td>Skip to next iteration</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="functions" class="doc-section">
+          <h2>⚡ Functions</h2>
+          <p>Create reusable code blocks.</p>
+
+          <h3>Defining Functions</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Simple function</span>
+<span class="keyword">define</span> greet:
+    <span class="keyword">whisper</span> <span class="string">"Hello, World!"</span>
+
+<span class="comment"># Function with parameters</span>
+<span class="keyword">define</span> greet_person <span class="keyword">with</span> name:
+    <span class="keyword">whisper</span> <span class="string">"Hello, "</span> + name + <span class="string">"!"</span>
+
+<span class="comment"># Function with multiple parameters</span>
+<span class="keyword">define</span> add <span class="keyword">with</span> a, b:
+    <span class="keyword">give back</span> a + b</code></pre>
+          </div>
+
+          <h3>Calling Functions</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Call simple function</span>
+<span class="keyword">call</span> greet
+
+<span class="comment"># Call with parameters</span>
+<span class="keyword">call</span> greet_person <span class="keyword">with</span> <span class="string">"Alice"</span>
+
+<span class="comment"># Store return value</span>
+<span class="keyword">call</span> add <span class="keyword">with</span> <span class="number">5</span>, <span class="number">3</span>
+<span class="keyword">whisper</span> <span class="string">"Sum: "</span> + __last_result__</code></pre>
+          </div>
+
+          <p>
+            <strong>Return Values:</strong> Use
+            <span class="inline-code">give back</span> to return a value from a
+            function.
+          </p>
+        </section>
+
+        <section id="story-objects" class="doc-section">
+          <h2>🎭 Story Objects</h2>
+          <p>Create game characters and story elements with properties.</p>
+
+          <h3>Creating Objects</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Create an object with properties</span>
+<span class="keyword">there is a</span> hero <span class="keyword">with</span> health <span class="number">100</span>, attack <span class="number">20</span>, defense <span class="number">10</span>
+<span class="keyword">there is a</span> dragon <span class="keyword">with</span> health <span class="number">200</span>, power <span class="number">50</span></code></pre>
+          </div>
+
+          <h3>Accessing Properties</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Access properties with space</span>
+<span class="keyword">show</span> hero health
+<span class="keyword">show</span> <span class="string">"Attack: "</span> + hero attack
+
+<span class="comment"># Store in variable</span>
+<span class="keyword">let</span> hp <span class="keyword">be</span> hero health</code></pre>
+          </div>
+
+          <h3>Modifying Properties</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Decrease property</span>
+<span class="keyword">the</span> hero <span class="keyword">loses</span> <span class="number">20</span> health
+
+<span class="comment"># Increase property</span>
+<span class="keyword">the</span> hero <span class="keyword">gains</span> <span class="number">15</span> attack
+
+<span class="comment"># Transfer between objects</span>
+<span class="keyword">the</span> hero <span class="keyword">gains</span> dragon treasure gold</code></pre>
+          </div>
+        </section>
+
+        <section id="lists" class="doc-section">
+          <h2>📋 Lists & Arrays</h2>
+          <p>Work with collections of data.</p>
+
+          <h3>Creating Lists</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">make</span> fruits <span class="keyword">with</span> [<span class="string">"apple"</span>, <span class="string">"banana"</span>, <span class="string">"orange"</span>]
+<span class="keyword">make</span> numbers <span class="keyword">with</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</code></pre>
+          </div>
+
+          <h3>Modifying Lists</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Add items</span>
+<span class="keyword">add</span> <span class="string">"grape"</span> <span class="keyword">to</span> fruits
+<span class="keyword">add</span> <span class="number">6</span> <span class="keyword">to</span> numbers
+
+<span class="comment"># Remove items</span>
+<span class="keyword">remove</span> <span class="string">"banana"</span> <span class="keyword">from</span> fruits
+<span class="keyword">remove</span> <span class="number">3</span> <span class="keyword">from</span> numbers</code></pre>
+          </div>
+
+          <h3>Iterating Lists</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">for each</span> fruit <span class="keyword">in</span> fruits:
+    <span class="keyword">whisper</span> <span class="string">"I like "</span> + fruit</code></pre>
+          </div>
+        </section>
+
+        <section id="math" class="doc-section">
+          <h2>🔢 Math Operations</h2>
+          <p>Perform calculations and use math functions.</p>
+
+          <h3>Basic Operations</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">let</span> sum <span class="keyword">be</span> <span class="number">10</span> + <span class="number">5</span>          <span class="comment"># Addition</span>
+<span class="keyword">let</span> difference <span class="keyword">be</span> <span class="number">10</span> - <span class="number">5</span>    <span class="comment"># Subtraction</span>
+<span class="keyword">let</span> product <span class="keyword">be</span> <span class="number">10</span> * <span class="number">5</span>       <span class="comment"># Multiplication</span>
+<span class="keyword">let</span> quotient <span class="keyword">be</span> <span class="number">10</span> / <span class="number">5</span>      <span class="comment"># Division</span></code></pre>
+          </div>
+
+          <h3>Math Functions</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Function</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="inline-code">sqrt(x)</span></td>
+                <td>Square root</td>
+                <td><span class="inline-code">sqrt(16)</span> → 4</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">pow(x, y)</span></td>
+                <td>Power (x to the y)</td>
+                <td><span class="inline-code">pow(2, 3)</span> → 8</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">abs(x)</span></td>
+                <td>Absolute value</td>
+                <td><span class="inline-code">abs(-10)</span> → 10</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">round(x)</span></td>
+                <td>Round to nearest integer</td>
+                <td><span class="inline-code">round(3.7)</span> → 4</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">floor(x)</span></td>
+                <td>Round down</td>
+                <td><span class="inline-code">floor(3.7)</span> → 3</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">ceil(x)</span></td>
+                <td>Round up</td>
+                <td><span class="inline-code">ceil(3.2)</span> → 4</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">min(...)</span></td>
+                <td>Minimum value</td>
+                <td><span class="inline-code">min(5, 2, 8)</span> → 2</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">max(...)</span></td>
+                <td>Maximum value</td>
+                <td><span class="inline-code">max(5, 2, 8)</span> → 8</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">random()</span></td>
+                <td>Random 0 to 1</td>
+                <td><span class="inline-code">random()</span> → 0.547</td>
+              </tr>
+              <tr>
+                <td><span class="inline-code">randint(a, b)</span></td>
+                <td>Random integer</td>
+                <td><span class="inline-code">randint(1, 10)</span> → 7</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Example usage</span>
+<span class="keyword">let</span> root <span class="keyword">be</span> sqrt(<span class="number">25</span>)
+<span class="keyword">let</span> power <span class="keyword">be</span> pow(<span class="number">2</span>, <span class="number">8</span>)
+<span class="keyword">let</span> dice <span class="keyword">be</span> randint(<span class="number">1</span>, <span class="number">6</span>)
+<span class="keyword">let</span> largest <span class="keyword">be</span> max(<span class="number">10</span>, <span class="number">25</span>, <span class="number">18</span>, <span class="number">30</span>)</code></pre>
+          </div>
+        </section>
+
+        <section id="strings" class="doc-section">
+          <h2>📝 String Operations</h2>
+          <p>Manipulate and transform text.</p>
+
+          <h3>String Concatenation</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">let</span> first <span class="keyword">be</span> <span class="string">"Hello"</span>
+<span class="keyword">let</span> second <span class="keyword">be</span> <span class="string">"World"</span>
+<span class="keyword">let</span> combined <span class="keyword">be</span> first + <span class="string">" "</span> + second
+<span class="keyword">whisper</span> combined  <span class="comment"># Output: Hello World</span></code></pre>
+          </div>
+
+          <h3>String Transformations</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Convert to uppercase</span>
+<span class="keyword">uppercase</span> <span class="string">"hello"</span> <span class="keyword">into</span> upper
+<span class="keyword">whisper</span> upper  <span class="comment"># Output: HELLO</span>
+
+<span class="comment"># Convert to lowercase</span>
+<span class="keyword">lowercase</span> <span class="string">"WORLD"</span> <span class="keyword">into</span> lower
+<span class="keyword">whisper</span> lower  <span class="comment"># Output: world</span></code></pre>
+          </div>
+
+          <h3>String with Variables</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">let</span> name <span class="keyword">be</span> <span class="string">"Alice"</span>
+<span class="keyword">let</span> age <span class="keyword">be</span> <span class="number">25</span>
+<span class="keyword">whisper</span> <span class="string">"My name is "</span> + name + <span class="string">" and I am "</span> + age + <span class="string">" years old"</span></code></pre>
+          </div>
+        </section>
+
+        <section id="files" class="doc-section">
+          <h2>📁 File Handling</h2>
+          <p>Read from and write to files.</p>
+
+          <h3>Writing to Files</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Write text to file</span>
+<span class="keyword">write</span> <span class="string">"Hello, File!"</span> <span class="keyword">to</span> <span class="string">"output.txt"</span>
+
+<span class="comment"># Write variable content</span>
+<span class="keyword">let</span> data <span class="keyword">be</span> <span class="string">"Important data"</span>
+<span class="keyword">write</span> data <span class="keyword">to</span> <span class="string">"data.txt"</span></code></pre>
+          </div>
+
+          <h3>Reading from Files</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Read file into variable</span>
+<span class="keyword">read</span> <span class="string">"input.txt"</span> <span class="keyword">into</span> content
+<span class="keyword">whisper</span> content
+
+<span class="comment"># Process file content</span>
+<span class="keyword">read</span> <span class="string">"message.txt"</span> <span class="keyword">into</span> message
+<span class="keyword">uppercase</span> message <span class="keyword">into</span> loud_message
+<span class="keyword">whisper</span> loud_message</code></pre>
+          </div>
+
+          <p>
+            <strong>Note:</strong> File paths are relative to where you run the
+            Whisper program.
+          </p>
+        </section>
+
+        <section id="errors" class="doc-section">
+          <h2>⚠️ Error Handling</h2>
+          <p>Handle errors gracefully with try-catch blocks.</p>
+
+          <h3>Attempt/Handle Block</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">attempt</span>:
+    <span class="keyword">let</span> result <span class="keyword">be</span> <span class="number">10</span> / <span class="number">0</span>
+    <span class="keyword">whisper</span> result
+<span class="keyword">handle</span>:
+    <span class="keyword">whisper</span> <span class="string">"Error occurred: "</span> + error</code></pre>
+          </div>
+
+          <h3>File Error Handling</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="keyword">attempt</span>:
+    <span class="keyword">read</span> <span class="string">"missing_file.txt"</span> <span class="keyword">into</span> data
+    <span class="keyword">whisper</span> data
+<span class="keyword">handle</span>:
+    <span class="keyword">whisper</span> <span class="string">"Could not read file: "</span> + error</code></pre>
+          </div>
+
+          <p>
+            The <span class="inline-code">error</span> variable contains the
+            error message in the handle block.
+          </p>
+        </section>
+
+        <section class="doc-section">
+          <h2>💡 Best Practices</h2>
+          <ul>
+            <li>Use descriptive variable names that make your code readable</li>
+            <li>
+              Add comments with <span class="inline-code">#</span> to explain
+              complex logic
+            </li>
+            <li>
+              Choose the syntax style that reads most naturally for your use
+              case
+            </li>
+            <li>Break complex programs into functions for reusability</li>
+            <li>
+              Always handle potential errors when working with files or user
+              input
+            </li>
+            <li>
+              Use story objects for game development - they make code intuitive
+            </li>
+          </ul>
+        </section>
+
+        <section class="doc-section">
+          <h2>🎯 Quick Reference</h2>
+          <p>Common patterns and idioms:</p>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">
+              <span>📋</span>
+              <span class="btn-text">Copy</span>
+            </button>
+
+            <pre><code><span class="comment"># Get user input and validate</span>
+<span class="keyword">ask</span> <span class="string">"Enter a number:"</span> <span class="keyword">into</span> num
+<span class="keyword">when</span> num <span class="keyword">greater than</span> <span class="number">0</span>:
+    <span class="keyword">whisper</span> <span class="string">"Positive number!"</span>
+
+<span class="comment"># Loop with counter</span>
+<span class="keyword">let</span> i <span class="keyword">be</span> <span class="number">0</span>
+<span class="keyword">while</span> i <span class="keyword">less than</span> <span class="number">10</span>:
+    <span class="keyword">whisper</span> i
+    <span class="keyword">increase</span> i <span class="keyword">by</span> <span class="number">1</span>
+
+<span class="comment"># Build a simple game character</span>
+<span class="keyword">there is a</span> player <span class="keyword">with</span> health <span class="number">100</span>, mana <span class="number">50</span>, level <span class="number">1</span>
+<span class="keyword">the</span> player <span class="keyword">loses</span> <span class="number">20</span> health
+<span class="keyword">the</span> player <span class="keyword">gains</span> <span class="number">10</span> mana
+
+<span class="comment"># Process a list of items</span>
+<span class="keyword">make</span> items <span class="keyword">with</span> [<span class="string">"sword"</span>, <span class="string">"shield"</span>, <span class="string">"potion"</span>]
+<span class="keyword">for each</span> item <span class="keyword">in</span> items:
+    <span class="keyword">whisper</span> <span class="string">"You have: "</span> + item</code></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Documentation</h3>
+          <ul>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="documentation.html">Language Reference</a></li>
+            <li><a href="examples.html">Examples</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang"
+                target="_blank"
+                >GitHub</a
+              >
+            </li>
+            <li><a href="contribute.html">Contribute</a></li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/issues"
+                target="_blank"
+                >Report Issues</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>About</h3>
+          <ul>
+            <li><a href="about.html">About Whisper</a></li>
+            <li>
+              <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+                >Creator</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/ibrahim787898m/whisper-lang/blob/main/LICENSE"
+                target="_blank"
+                >MIT License</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Download Whisper</h3>
+          <p>Get Whisper for your computer. Start Whispering today!</p>
+          <ul
+            style="
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              margin-top: 1rem;
+            "
+          >
+            <li style="font-size: 30px">
+              <i class="fa-brands fa-windows"></i>
+            </li>
+            <li style="font-size: 30px"><i class="fa-brands fa-apple"></i></li>
+            <li style="font-size: 30px"><i class="fa-brands fa-linux"></i></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 Whisper Programming Language | Created by
+          <a href="https://v2.ibrahimmustafaopu.com/" target="_blank"
+            >Ibrahim Mustafa Opu</a
+          >
+          | Version 1.0.0
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        const hamburger = document.querySelector(".hamburger");
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
+      }
+
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const navLinks = document.getElementById("navLinks");
+          const hamburger = document.querySelector(".hamburger");
+          navLinks.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+
+      // Smooth scroll for sidebar links
+      document.querySelectorAll(".sidebar-nav a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: "smooth" });
+
+            // Update active state
+            document
+              .querySelectorAll(".sidebar-nav a")
+              .forEach((a) => a.classList.remove("active"));
+            this.classList.add("active");
+          }
+        });
+      });
+
+      // Update active sidebar link on scroll
+      window.addEventListener("scroll", () => {
+        let current = "";
+        document.querySelectorAll(".doc-section").forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 150) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        document.querySelectorAll(".sidebar-nav a").forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      function copyCode(button) {
+        // Find the code element in the same container
+        const container = button.parentElement;
+        const codeElement = container.querySelector("code");
+        const code = codeElement.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(code)
+          .then(() => {
+            const btnText = button.querySelector(".btn-text");
+            const originalText = btnText.textContent;
+
+            // Change button appearance
+            btnText.textContent = "Copied!";
+            button.classList.add("copied");
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+              btnText.textContent = originalText;
+              button.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            alert("Failed to copy code");
+          });
+      }
+    </script>
+  </body>
+</html>
