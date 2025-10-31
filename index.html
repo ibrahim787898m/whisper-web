@@ -721,10 +721,12 @@
   <body>
     <nav class="navbar">
       <div class="nav-container">
-        <div class="logo">
-          <span>🌙</span>
-          <span>Whisper</span>
-        </div>
+        <a href="index.html" style="text-decoration: none;">
+          <div class="logo">
+            <span>🌙</span>
+            <span>Whisper</span>
+          </div>
+        </a>
         <div class="hamburger" onclick="toggleMenu()">
           <span></span>
           <span></span>
@@ -748,6 +750,48 @@
         A truly unique programming language with conversational, natural English
         syntax that makes coding feel like storytelling.
       </p>
+
+      <!-- Add this near the top of your hero section, after the tagline -->
+      <div
+        style="
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-bottom: 2rem;
+        "
+      >
+        <a
+          href="https://pypi.org/project/whisper-lang/"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <img
+            src="https://img.shields.io/pypi/v/whisper-lang?color=blue&label=PyPI&logo=python&logoColor=white"
+            alt="PyPI"
+          />
+        </a>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=ibrahimmustafaopu.whisper-lang-support"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <img
+            src="https://img.shields.io/visual-studio-marketplace/v/ibrahimmustafaopu.whisper-lang-support?color=blue&label=VS%20Code&logo=visualstudiocode"
+            alt="VS Code"
+          />
+        </a>
+        <a
+          href="https://github.com/ibrahim787898m/whisper-lang"
+          target="_blank"
+          style="text-decoration: none"
+        >
+          <img
+            src="https://img.shields.io/github/stars/ibrahim787898m/whisper-lang?style=social"
+            alt="GitHub"
+          />
+        </a>
+      </div>
 
       <div class="cta-buttons">
         <a href="installation.html" class="btn btn-primary">Get Started</a>
